@@ -105,10 +105,10 @@ void CGDE_3View::OnInitialUpdate()
 	CDC *pdc=GetDC();
 	pDoc->buffer.DeleteDC();
 	if(!pDoc->buffer.CreateCompatibleDC(pdc)){
-		AfxMessageBox("Cannot create buffer DC",MB_OK);
+		AfxMessageBox(L"Cannot create buffer DC",MB_OK);
 	}
 	if(!(pDoc->memoryBmp.CreateCompatibleBitmap(pdc,MAX_X, MAX_Y))){
-		AfxMessageBox("Cannot create Bitmap",MB_OK);
+		AfxMessageBox(L"Cannot create Bitmap",MB_OK);
 	}
 	pDoc->buffer.SelectObject( &pDoc->memoryBmp );				// Das Speicher-Bitmap als Geraetekontext auswaehlen.
 	pDoc->nShapePos =0;
@@ -226,7 +226,7 @@ void CGDE_3View::OnStartButton()
 	theApp.m_stopflag=FALSE;
 	if(theApp.vw->uthread==NULL)
 		theApp.vw->uthread = AfxBeginThread(StartGDE, &theApp, THREAD_PRIORITY_NORMAL);
-	else AfxMessageBox("User_main is already running\n",MB_OK);
+	else AfxMessageBox(L"User_main is already running\n",MB_OK);
 	
 }
 void CGDE_3View::OnStopButton() 
@@ -335,7 +335,7 @@ void CGDE_3View::OnMouseMove(UINT nFlags, CPoint point)
 	shpoint.y = (int)(point.y/m_fYScale);
 	//printf("3.x:%d,y:%d\n",shpoint.x,shpoint.y);
 	CString strCurPos;
-	strCurPos.Format("[x,y]=%d,%d ",shpoint.x, shpoint.y);
+	strCurPos.Format(L"[x,y]=%d,%d ",shpoint.x, shpoint.y);
 	CStatusBar *sb= &((CMainFrame *)theApp.m_pMainWnd)->m_wndStatusBar;
 	sb->SetPaneText(sb->CommandToIndex(ID_INDICATOR_CURPOS),strCurPos);
 
@@ -433,5 +433,5 @@ void CGDE_3View::OnFileSaveAs()
 void CGDE_3View::OnFileNew()
 {
 	// TODO: Fügen Sie hier Ihren Befehlsbehandlungscode ein.
-	AfxMessageBox("Not supported",MB_OK);
+	AfxMessageBox(L"Not supported",MB_OK);
 }

@@ -99,7 +99,7 @@ void set_drawarea(int b, int h)
 	theApp.vw->GetDocument()->memoryBmp.DeleteObject();		// Das alte Bitmap im Speicher loeschen.
 	CDC *pdc=theApp.vw->GetDC();
 	if(!theApp.vw->GetDocument()->memoryBmp.CreateCompatibleBitmap(pdc,MAX_X, MAX_Y)){
-		AfxMessageBox("Cannot create Bitmap",MB_OK);
+		AfxMessageBox(L"Cannot create Bitmap",MB_OK);
 	}
 	theApp.vw->GetDocument()->buffer.SelectObject( &theApp.vw->GetDocument()->memoryBmp );				// Das Speicher-Bitmap als Geraetekontext auswaehlen.
 	theApp.vw->GetDocument()->buffer.PatBlt(0, 0, MAX_X, MAX_Y, WHITENESS);	// Den ganzen Puffer weiss malen.

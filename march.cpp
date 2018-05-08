@@ -1,87 +1,107 @@
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "stdafx.h"
+#include "march.h"
 using namespace std;
 
-/*char* march_test(string& OP1, string& OP2, string& OP3, string& OP4, string& direction = 'UD'){
-	int *fieldtotest=NULL;
-	
-	if(*direction == 'Up'){
-		do{
-			if(*OP1 == 'W1'){
-			}else if(*OP1 == 'W0')
-			fieldtotest++;
-		}while(fieldtotest!=NULL)
-	}else if(*direction == 'Dn'){
-		
-	}else if(*direction == 'UD' || *direction != NULL){
-		
-	}
-}
-*/
-
-class MarchElement
-{
-	public: 
-	int value;
-	
-	bool checkZero();
-	bool checkOne();
-	void writeOne();
-	void writeZero();
-};
 
 bool MarchElement::checkOne() {
-return (this.value == 1);	
+return (value ==  1);	
 }
 
 bool MarchElement::checkZero() {
-return (this.value == 0);	
+return (value == 0);	
 }
 
 void MarchElement::writeOne() {
-	this.value = 1;
+	value = 1;
 }
 
 void MarchElement::writeZero() {
-	this.value = 0;
+	value = 0;
+}
+
+int MarchElement::getValue() {
+	return value;
 }
 
 
-void main (){
-	string direction;
-	const int nOp;			//Nummer der Einzeloperationen pro Testwiederholung
-	int length;				//legt Größe des Speicherbereichs fest.
-	string orderList[nOp];	//Array, das die verschiedenen Operationen ('W1', 'W0', 'R0', 'R1') enthält.
-	int i = 0;
+
+void MarchTest::RunTest(vector<string> orderList, int length) {
+
+	nMarch = orderList.size();		
+	j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
+	vector<MarchElement> TestArea(length);
+
 	
-	if(direction == 'Up'){
-		int p = i;				//Indirekte Zugriffsvariable, die je nach Richtung bestimmt wird.
-	}else if(direction == 'Dn'){
-		int p = length - i;
-	}else{
-	}
+		for (i = 0; i < length; ) {
+			int n = 0;
+			while(j<nMarch) {
+			if (direction == "Up") {
+				k = i;
+			}
+			else if (direction == "Dn") {
+				k = (length - 1) - i;
+			}
+
+			if (orderList[j] == "March") {
+				if (n > 0) {
+					if (i < length - 1) {
+						j = j - n;
+						n = 0;
+						i++;
+					}
+					else {
+						n = 0;
+						j++;
+						i = 0;
+						break;
+					}
+				}
+				else {
+					j++;
+				}
 				
-	TestArea[length] = new MarchElement;
-	
-	for(i<length; i++;){
-		for(int j=0; j<nOp; j++){
-			switch (orderList[j]){
-				case 'W1':
-					TestArea[p].writeOne();
-					break;
-				case 'W0':
-					TestArea[p].writeZero();
-					break;
-				case 'R0':
-					TestArea[p].checkZero();
-					break;
-				case 'R1':
-					TestArea[p].checkOne();
-					break;
+				continue;
+			}else if (orderList[j] == "Up") {
+				direction = "Up";
+			}
+			else if (orderList[j] == "Dn") {
+				direction = "Dn";
+			}
+			else {
+				if (orderList[j] == "W0") {
+					TestArea[k].writeZero();
+					n++;
+				}
+				else if (orderList[j] == "W1") {
+					TestArea[k].writeOne();
+					n++;
+				}
+				else if (orderList[j] == "R0") {
+					n++;
+					if (!TestArea[k].checkZero()) {
+						cout << "An der Stelle " << k << " befindet sich ein Fehler(0)." << endl;
+					}
+				}
+				else if (orderList[j] == "R1") {
+					n++;
+					if (!TestArea[k].checkOne()) {
+						cout << "An der Stelle " << k << " befindet sich ein Fehler(1)." << endl;
+					}
+				}
+				if (k == 14) { Zeichne_Rechteck(TestArea, direction, orderList[j]); }
+			}
+				j++;
+			}
+			
+			if (j >= nMarch) {
+				j = j - n;
+				n = 0;
+				i++;
 			}
 		}
-		j=0;
-	}
 
+}
+
+void main() {
+	return;
 }

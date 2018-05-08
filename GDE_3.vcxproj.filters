@@ -14,10 +14,10 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
     </Filter>
     <Filter Include="Graphics">
-      <UniqueIdentifier>{348c3f03-1f9d-492b-8615-52b08fbae351}</UniqueIdentifier>
+      <UniqueIdentifier>{f1e65641-07bb-430c-bf53-5712640ec111}</UniqueIdentifier>
     </Filter>
     <Filter Include="Console">
-      <UniqueIdentifier>{81c928f2-9e9d-4a30-8f80-23690024e481}</UniqueIdentifier>
+      <UniqueIdentifier>{71a623c3-e555-4cc8-821b-952dba76b89d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -104,17 +104,25 @@
     <ClInclude Include="Parser.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="march.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\GDE_3.ico">
+    <None Include="res\GDE_3.ico">
       <Filter>Ressourcendateien</Filter>
-    </Image>
-    <Image Include="res\GDE_3Doc.ico">
+    </None>
+    <None Include="res\GDE_3.rc2">
       <Filter>Ressourcendateien</Filter>
-    </Image>
-    <Image Include="res\Toolbar.bmp">
+    </None>
+    <None Include="res\GDE_3Doc.ico">
       <Filter>Ressourcendateien</Filter>
-    </Image>
+    </None>
+    <None Include="res\Toolbar.bmp">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="ReadMe.txt" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GDE_3.rc">
@@ -122,15 +130,9 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\GDE_3.rc2">
-      <Filter>Ressourcendateien</Filter>
-    </None>
+    <CustomBuildStep Include="res\GDE_3.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-    <Text Include="in1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="res\GDE_3.manifest" />
+    <Text Include="MarchB.txt" />
   </ItemGroup>
 </Project>
