@@ -26,7 +26,7 @@ int MarchElement::getValue() {
 
 
 void MarchTest::RunTest(vector<string> orderList, int length) {
-
+	bool Toggle_Next_Line = false;
 	nMarch = orderList.size();		
 	j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
 	vector<MarchElement> TestArea(length);
@@ -50,6 +50,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 						i++;
 					}
 					else {
+						Toggle_Next_Line = true;
 						n = 0;
 						j++;
 						i = 0;
@@ -88,7 +89,16 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 						cout << "An der Stelle " << k << " befindet sich ein Fehler(1)." << endl;
 					}
 				}
-				if (k == 14) { Zeichne_Rechteck(TestArea, direction, orderList[j]); }
+				if (k == 14) {
+					if (Toggle_Next_Line) {
+						Next_Line();
+						Toggle_Next_Line = false;
+
+					}
+					
+					Zeichne_Rechteck(TestArea, direction, orderList[j]); 
+
+				}
 			}
 				j++;
 			}

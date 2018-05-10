@@ -42,14 +42,20 @@ struct _Anfang_Dim {
 
 }anfang_dim;
 
+void Next_Line() {
+	anfang_dim.y1 += 180;
+	anfang_dim.x1 = 50;
+}
+
 void Zeichne_Rechteck(vector<MarchElement> TestArea, string direction, string operation)
 {
 	int ii, jj, zz;
 
 
-	if (anfang_dim.x1 >620) {
-		anfang_dim.y1 = anfang_dim.y1 + 180;
-		anfang_dim.x1 = anfang_dim.x1 - 760;
+	if (anfang_dim.x1 > 620) {
+		//anfang_dim.y1 = anfang_dim.y1 + 180;
+		//anfang_dim.x1 = anfang_dim.x1 - 760;
+		Next_Line();
 	}
 
 	//Länge und Breite vom Rechteck anpassen
