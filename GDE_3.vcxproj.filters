@@ -134,5 +134,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="MarchB.txt" />
+    <Text Include="MarchA.txt" />
+    <Text Include="MarchC-.txt" />
+    <Text Include="MarchC.txt" />
+    <Text Include="MATS+.txt" />
   </ItemGroup>
 </Project>

@@ -170,7 +170,11 @@
     </CustomBuildStep>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="MarchA.txt" />
     <Text Include="MarchB.txt" />
+    <Text Include="MarchC-.txt" />
+    <Text Include="MarchC.txt" />
+    <Text Include="MATS+.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

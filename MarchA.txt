@@ -1,8 +1,7 @@
 Begin
-March 1 (Dn,W0);  \\Muss ud noch hin
-March 2 (Up,R0,W1,R1,W0,R0,W1);
+March 1 (Ud,W0);  
+March 2 (Up,R0,W1,W0,W1);
 March 3 (Up,R1,W0,W1);
 March 4 (Dn,R1,W0,W1,W0);
 March 5 (Dn,R0,W1,W0);
 End
-

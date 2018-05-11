@@ -72,15 +72,21 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 					direction = orderList[j];
 				}
 				else
-					if (orderList[j - 2] == "W0") {
-						if (orderList[j + 1] == "R0")
-							cout << "Decodertest" << endl;
+					if ((j - 4) != 0) {
+						if (orderList[j - 2] == "W0") {
+							if (orderList[j + 1] == "R0")
+								cout << "Decodertest" << endl;
+							direction = orderList[j];
+						}
+						else if (orderList[j - 2] == "W1") {
+							if (orderList[j + 1] == "R1")
+								cout << "Decodertest" << endl;
+							direction = orderList[j];
+						}
 					}
-					else if (orderList[j - 2] == "W1") {
-						if (orderList[j + 1] == "R1")
-							cout << "Decodertest" << endl;
-					}
-
+						else
+							direction = orderList[j];
+					
 			}
 			else if (orderList[j] == "Dn") {		// Decodertest
 				if (direction == "") {
@@ -90,14 +96,24 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 					direction = orderList[j];
 				}
 				else
-					if (orderList[j - 2] == "W0") {
-						if (orderList[j + 1] == "R0")
-							cout << "Decodertest" << endl;
+					if ((j - 4) != 0) {
+						if (orderList[j - 2] == "W0") {
+							if (orderList[j + 1] == "R0") {
+								cout << "Decodertest" << endl;
+								direction = orderList[j];
+							}
+						}
+						else if (orderList[j - 2] == "W1") {
+							if (orderList[j + 1] == "R1") {
+								cout << "Decodertest" << endl;
+								direction = orderList[j];
+							}
+						}
 					}
-					else if (orderList[j - 2] == "W1") {
-						if (orderList[j + 1] == "R1")
-							cout << "Decodertest" << endl;
-					}
+					else
+						direction = orderList[j];
+
+					
 			}
 			else {
 				if (orderList[j] == "W0") {
