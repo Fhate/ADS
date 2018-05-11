@@ -22,7 +22,7 @@ public:
 class MarchTest {
 public:
 	int nMarch;		//Anzahl der Operationen
-	string direction;
+	string direction = " ";
 	int i, j, k;	//Laufvariablen für Schleifen
 
 	MarchTest() {};
