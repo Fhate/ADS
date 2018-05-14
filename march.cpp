@@ -2,6 +2,23 @@
 #include "march.h"
 using namespace std;
 
+vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler) {
+	vector<bool> doubles(Testspeicher.size());
+
+	for (int k = 0; k < Testspeicher.size(); k++) {
+		doubles[k] = false;
+		for (int l = 0; l < TestArea.size(); l++) {
+			if (l == Speicherzaehler || TestArea[l].getValue() == Testspeicher[k][l].getValue()) {
+				continue;
+			}
+			else if (TestArea[l].getValue() != Testspeicher[k][l].getValue) {
+				doubles[k] = true;
+			}
+			
+		}
+	}
+	return doubles;
+}
 
 bool MarchElement::checkOne() {
 return (value ==  1);	
@@ -30,7 +47,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 	nMarch = orderList.size();		
 	j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
 	vector<MarchElement> TestArea(length);
-
+	vector<vector<MarchElement>> Testspeicher;
 	
 		for (i = 0; i < length; ) {
 			int n = 0;
@@ -91,13 +108,16 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 				}
 				if (k == 14) {
 					if (Toggle_Next_Line) {
-						Next_Line();
+						Next_Line(NumLine);
 						Toggle_Next_Line = false;
 
 					}
-					
-					Zeichne_Rechteck(TestArea, direction, orderList[j]); 
 
+					
+					vector<bool> doubles = checkForDoubles(Testspeicher, TestArea, k);
+					Testspeicher.push_back(TestArea);
+					Zeichne_Rechteck(TestArea, direction, orderList[j]); 
+					Zeichne_Dubletten(doubles, NumPerLine);
 				}
 			}
 				j++;

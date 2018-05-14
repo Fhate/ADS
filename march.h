@@ -17,7 +17,9 @@ public:
 	void writeOne();
 	void writeZero();
 	int getValue();
-};
+	};
+
+vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler);
 
 class MarchTest {
 public:

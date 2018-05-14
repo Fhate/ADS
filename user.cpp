@@ -42,25 +42,36 @@ struct _Anfang_Dim {
 
 }anfang_dim;
 
-void Next_Line() {
-	anfang_dim.y1 += 180;
-	anfang_dim.x1 = 50;
+void Zeichne_Dubletten(vector<bool> &doubles, vector<int> &NumPerLine) {
+	for (int i = 0; i < NumPerLine.size(); i++) {
+		for (int j = 0; j < NumPerLine[i]; i++) {
+			if (doubles[i + j*NumPerLine[i]]) {
+				//Dublette kennzeichnen, Farbiges X oder ähnliches, dabei verschieben um dx*j und dy*i
+			}
+		}
+	}
 }
 
-void Zeichne_Rechteck(vector<MarchElement> TestArea, string direction, string operation)
+void Next_Line(int &NumLine) {
+	anfang_dim.y1 += 170;
+	anfang_dim.x1 = 50;
+	NumLine++;
+}
+
+void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string operation, vector<int> &NumPerLine, int &NumLine)
 {
 	int ii, jj, zz;
 
 
-	if (anfang_dim.x1 > 620) {
+	if (anfang_dim.x1 > 1470) {
 		//anfang_dim.y1 = anfang_dim.y1 + 180;
 		//anfang_dim.x1 = anfang_dim.x1 - 760;
-		Next_Line();
+		Next_Line(NumLine);
 	}
 
 	//Länge und Breite vom Rechteck anpassen
 	anfang_dim.x2 = anfang_dim.x1 + 130;
-	anfang_dim.y2 = anfang_dim.y1 + 120;
+	anfang_dim.y2 = anfang_dim.y1 + 130;
 			
 	text(anfang_dim.x1 + 50, anfang_dim.y1 - 20, 15, BLACK, 0, CENTER_ALIGN, "%s",operation.c_str(), 11);
 			
@@ -97,8 +108,9 @@ void Zeichne_Rechteck(vector<MarchElement> TestArea, string direction, string op
 	rectangle(anfang_dim.x1, anfang_dim.y1, anfang_dim.x2, anfang_dim.y2, anfang_dim.cframe, anfang_dim.cfill = -1);
 			
 	//Koordinaten erweitern
-	anfang_dim.x1 = anfang_dim.x1 + 190;
-	anfang_dim.x2 = anfang_dim.x2 + 190;
+	anfang_dim.x1 = anfang_dim.x1 + 150;
+	anfang_dim.x2 = anfang_dim.x2 + 150;
+	NumPerLine[NumLine]++;
 }
 
 
@@ -131,6 +143,8 @@ void user_main()
 
 	//-----------------------------------------------------------------------------------
 	vector <string> helpary;
+	NumPerLine = { 0 };
+	NumLine = 0;
 	//----------------------------------------------------------------------------------
 
 
@@ -152,19 +166,21 @@ void user_main()
 	
 
 	int ww, hh;
-	set_windowpos(0, 0, 1000, 600);
+	set_windowpos(0, 0, 1600, 1000);
 
 	while (1) {								// Endlosschleife
 		get_windowsize(&ww, &hh);
 		set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
 		clrscr();
 		if(1){
-			cout << "Startvorschlag: X1=50 , y1=50 \n\n";
+		/*	cout << "Startvorschlag: X1=50 , y1=50 \n\n";
 			cout << "x1 eingeben: ";              //anfangposition eingeben
 			cin >> anfang_dim.x1;
 			cout << "y1 eingeben: ";
 			cin >> anfang_dim.y1;
-
+			*/
+			anfang_dim.x1 = 50;
+			anfang_dim.y1 = 50;
 			anfang_dim.Werte_korrig();  //werte überprüfen und korriegieren
 			MarchTest MT;
 			MT.RunTest(helpary, 20);
