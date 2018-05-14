@@ -3,6 +3,7 @@
 using namespace std;
 
 vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler) {
+//Funktion prüft die aktuell zu zeichnende Umgebung auf Dubletten unter bereits gespeicherten Umgebungen, aktuell wird dabei jede Umgebung einzeln verglichen. 
 	vector<bool> doubles(Testspeicher.size());
 
 	for (int k = 0; k < Testspeicher.size(); k++) {
@@ -43,17 +44,17 @@ int MarchElement::getValue() {
 
 
 void MarchTest::RunTest(vector<string> orderList, int length) {
-	bool Toggle_Next_Line = false;
+	bool Toggle_Next_Line = false;				//KOntrollvariable, die das Springen in eine neue Zeile steuert.
 	nMarch = orderList.size();
 	j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
-	vector<MarchElement> TestArea(length);
-	vector<vector<MarchElement>> Testspeicher;
+	vector<MarchElement> TestArea(length);		//Speicherbereich den der Test durchläuft
+	vector<vector<MarchElement>> Testspeicher;	//Hier werden die einzelnen Testumgebungen abgespeichert um sie auf Dubletten pruefen zu koennen.
 	
 		for (i = 0; i < length; ) {
-			int n = 0;
+			int n = 0;					//Anzahl der Operationen(R/W) im aktuellen Marchtest, die bereits durchgelaufen sind.
 			while(j<nMarch) {
 			if (direction == "Up") {
-				k = i;
+				k = i;					//Zugriffsvariable, die aus der Laufvariable i in Abhaengigkeit von direction berechnet wird.
 			}
 			else if (direction == "Dn") {
 				k = (length - 1) - i;
@@ -61,12 +62,12 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 
 			if (orderList[j] == "March") {
 				if (n > 0) {
-					if (i < length - 1) {
+					if (i < length - 1) {			//Aktueller Marchtest auf den Anfang zurueck, Reset von n
 						j = j - n;
 						n = 0;
 						i++;
 					}
-					else {
+					else {							//Neuer March Test
 						Toggle_Next_Line = true;
 						n = 0;
 						j++;
@@ -162,15 +163,15 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 
 					
 					vector<bool> doubles = checkForDoubles(Testspeicher, TestArea, k);
-					Testspeicher.push_back(TestArea);
-					Zeichne_Rechteck(TestArea, direction, orderList[j]); 
+					Testspeicher.push_back(TestArea);		//Abspeichern des aktuell getesteten Bereichs
+					Zeichne_Rechteck(TestArea, direction, orderList[j], NumPerLine, NumLine); 
 					Zeichne_Dubletten(doubles, NumPerLine);
 				}
 			}
 			j++;
 		}
 
-		if (j >= nMarch) {
+		if (j >= nMarch) {		//faengt Fehler ab 
 			j = j - n;
 			n = 0;
 			i++;

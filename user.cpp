@@ -55,7 +55,7 @@ void Zeichne_Dubletten(vector<bool> &doubles, vector<int> &NumPerLine) {
 void Next_Line(int &NumLine) {
 	anfang_dim.y1 += 170;
 	anfang_dim.x1 = 50;
-	NumLine++;
+	NumLine++;		//Mitzaehlen der Zeilen
 }
 
 void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string operation, vector<int> &NumPerLine, int &NumLine)
@@ -110,7 +110,7 @@ void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string o
 	//Koordinaten erweitern
 	anfang_dim.x1 = anfang_dim.x1 + 150;
 	anfang_dim.x2 = anfang_dim.x2 + 150;
-	NumPerLine[NumLine]++;
+	NumPerLine[NumLine]++;			//Tabellenanzahl pro Zeile um eins erhoehen
 }
 
 
