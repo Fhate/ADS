@@ -15,7 +15,7 @@
 
 #ifndef _USE_OLD_OSTREAMS
 using namespace std;
-#endif
+#endif 
 
 
 COLORREF Colref[]={BLACK,RED,GREEN,BLUE,YELLOW,BROWN};
