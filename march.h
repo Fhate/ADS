@@ -24,7 +24,7 @@ vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<
 class MarchTest {
 public:
 	int nMarch;		//Anzahl der Operationen
-	string direction;
+	string direction = " ";
 	int i, j, k;	//Laufvariablen für Schleifen
 
 	MarchTest() {};

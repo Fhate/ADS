@@ -21,11 +21,11 @@ vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<
 }
 
 bool MarchElement::checkOne() {
-return (value ==  1);	
+	return (value == 1);
 }
 
 bool MarchElement::checkZero() {
-return (value == 0);	
+	return (value == 0);
 }
 
 void MarchElement::writeOne() {
@@ -44,7 +44,7 @@ int MarchElement::getValue() {
 
 void MarchTest::RunTest(vector<string> orderList, int length) {
 	bool Toggle_Next_Line = false;
-	nMarch = orderList.size();		
+	nMarch = orderList.size();
 	j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
 	vector<MarchElement> TestArea(length);
 	vector<vector<MarchElement>> Testspeicher;
@@ -77,13 +77,60 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 				else {
 					j++;
 				}
-				
+
 				continue;
-			}else if (orderList[j] == "Up") {
-				direction = "Up";
 			}
-			else if (orderList[j] == "Dn") {
-				direction = "Dn";
+			else if (orderList[j] == "Up") {		// Decodertest
+
+				if (direction == "") {
+					direction = orderList[j];
+				}
+				else if (direction == orderList[j]) {
+					direction = orderList[j];
+				}
+				else
+					if ((j - 4) != 0) {
+						if (orderList[j - 2] == "W0") {
+							if (orderList[j + 1] == "R0")
+								cout << "Decodertest" << endl;
+							direction = orderList[j];
+						}
+						else if (orderList[j - 2] == "W1") {
+							if (orderList[j + 1] == "R1")
+								cout << "Decodertest" << endl;
+							direction = orderList[j];
+						}
+					}
+						else
+							direction = orderList[j];
+					
+			}
+			else if (orderList[j] == "Dn") {		// Decodertest
+				if (direction == "") {
+					direction = orderList[j];
+				}
+				else if (direction == orderList[j]) {
+					direction = orderList[j];
+				}
+				else
+					if ((j - 4) != 0) {
+						if (orderList[j - 2] == "W0") {
+							if (orderList[j + 1] == "R0") {
+								cout << "Decodertest" << endl;
+								direction = orderList[j];
+							}
+						}
+						else if (orderList[j - 2] == "W1") {
+							if (orderList[j + 1] == "R1") {
+								cout << "Decodertest" << endl;
+								direction = orderList[j];
+							}
+						}
+					}
+					else
+						direction = orderList[j];
+
+					
 			}
 			else {
 				if (orderList[j] == "W0") {
@@ -120,15 +167,15 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 					Zeichne_Dubletten(doubles, NumPerLine);
 				}
 			}
-				j++;
-			}
-			
-			if (j >= nMarch) {
-				j = j - n;
-				n = 0;
-				i++;
-			}
+			j++;
 		}
+
+		if (j >= nMarch) {
+			j = j - n;
+			n = 0;
+			i++;
+		}
+	}
 
 }
 

@@ -1,0 +1,9 @@
+Begin
+March 1 (Ud,W0);  
+March 2 (Up,R0,W1);
+March 3 (Up,R1,W0);
+March 4 (Ud,R0);
+March 5 (Dn,R0,W1);
+March 6 (Dn,R1,W0);
+March 7 (Ud,R0);
+End
