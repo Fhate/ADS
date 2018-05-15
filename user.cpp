@@ -17,10 +17,11 @@
 using namespace std;
 #endif 
 
-
+const char ERRORSIGNS[26] = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y', };
 COLORREF Colref[]={BLACK,RED,GREEN,BLUE,YELLOW,BROWN};
 int Colind=0;
-
+vector<int> AnzahlProZeile;
+int ZeilenZahl;
 struct _Anfang_Dim {
 	int x1;
 	int y1;
@@ -42,23 +43,29 @@ struct _Anfang_Dim {
 
 }anfang_dim;
 
-void Zeichne_Dubletten(vector<bool> &doubles, vector<int> &NumPerLine) {
-	for (int i = 0; i < NumPerLine.size(); i++) {
-		for (int j = 0; j < NumPerLine[i]; i++) {
-			if (doubles[i + j*NumPerLine[i]]) {
+void Zeichne_Dubletten(vector<bool> &doubles) {
+	int dx = 150;
+	int dy = 170;
+	for (int i = 0; i < AnzahlProZeile.size(); i++) {
+		for (int j = 0; j < AnzahlProZeile[i]; j++) {
+			if (doubles.size() <= (j + i*AnzahlProZeile[i]))return;
+			if (doubles[j + i*AnzahlProZeile[i]]) {
 				//Dublette kennzeichnen, Farbiges X oder ähnliches, dabei verschieben um dx*j und dy*i
+				//50 ist der Startwert, mit dem Durchlaufen der beiden Schleifen werden somit alle Darstellungen abgearbeitet.
+				text(50 + dx*j+ 20, 50 + dy*j - 20, 15, BLACK, 0, CENTER_ALIGN, "%c", ERRORSIGNS[j+i*AnzahlProZeile[i]], 11);
 			}
 		}
 	}
 }
 
-void Next_Line(int &NumLine) {
+void Next_Line() {
 	anfang_dim.y1 += 170;
 	anfang_dim.x1 = 50;
-	NumLine++;		//Mitzaehlen der Zeilen
+	AnzahlProZeile.push_back(0);
+	ZeilenZahl++;		//Mitzaehlen der Zeilen
 }
 
-void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string operation, vector<int> &NumPerLine, int &NumLine)
+void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string operation)
 {
 	int ii, jj, zz;
 
@@ -66,7 +73,7 @@ void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string o
 	if (anfang_dim.x1 > 1470) {
 		//anfang_dim.y1 = anfang_dim.y1 + 180;
 		//anfang_dim.x1 = anfang_dim.x1 - 760;
-		Next_Line(NumLine);
+		Next_Line();
 	}
 
 	//Länge und Breite vom Rechteck anpassen
@@ -110,7 +117,7 @@ void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string o
 	//Koordinaten erweitern
 	anfang_dim.x1 = anfang_dim.x1 + 150;
 	anfang_dim.x2 = anfang_dim.x2 + 150;
-	NumPerLine[NumLine]++;			//Tabellenanzahl pro Zeile um eins erhoehen
+	AnzahlProZeile[ZeilenZahl]++;			//Tabellenanzahl pro Zeile um eins erhoehen
 }
 
 
@@ -143,8 +150,8 @@ void user_main()
 
 	//-----------------------------------------------------------------------------------
 	vector <string> helpary;
-	NumPerLine = { 0 };
-	NumLine = 0;
+	AnzahlProZeile = {0};
+	ZeilenZahl = 0;
 	//----------------------------------------------------------------------------------
 
 

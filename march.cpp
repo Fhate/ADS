@@ -2,23 +2,23 @@
 #include "march.h"
 using namespace std;
 
+
 vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler) {
 //Funktion prüft die aktuell zu zeichnende Umgebung auf Dubletten unter bereits gespeicherten Umgebungen, aktuell wird dabei jede Umgebung einzeln verglichen. 
-	vector<bool> doubles(Testspeicher.size());
-
+	vector<bool> doublesbuf(Testspeicher.size());
 	for (int k = 0; k < Testspeicher.size(); k++) {
-		doubles[k] = false;
+		doublesbuf[k] = false;
 		for (int l = 0; l < TestArea.size(); l++) {
 			if (l == Speicherzaehler || TestArea[l].getValue() == Testspeicher[k][l].getValue()) {
 				continue;
 			}
-			else if (TestArea[l].getValue() != Testspeicher[k][l].getValue) {
-				doubles[k] = true;
+			else if (TestArea[l].getValue() != Testspeicher[k][l].getValue()) {
+				doublesbuf[k] = true;
 			}
 			
 		}
 	}
-	return doubles;
+	return doublesbuf;
 }
 
 bool MarchElement::checkOne() {
@@ -44,12 +44,14 @@ int MarchElement::getValue() {
 
 
 void MarchTest::RunTest(vector<string> orderList, int length) {
+	
 	bool Toggle_Next_Line = false;				//KOntrollvariable, die das Springen in eine neue Zeile steuert.
 	nMarch = orderList.size();
 	j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
 	vector<MarchElement> TestArea(length);		//Speicherbereich den der Test durchläuft
 	vector<vector<MarchElement>> Testspeicher;	//Hier werden die einzelnen Testumgebungen abgespeichert um sie auf Dubletten pruefen zu koennen.
 	
+
 		for (i = 0; i < length; ) {
 			int n = 0;					//Anzahl der Operationen(R/W) im aktuellen Marchtest, die bereits durchgelaufen sind.
 			while(j<nMarch) {
@@ -82,8 +84,8 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 				continue;
 			}
 			else if (orderList[j] == "Up") {		// Decodertest
-
-				if (direction == "") {
+				direction = orderList[j];
+				/*if (direction == "" || direction == " ") {
 					direction = orderList[j];
 				}
 				else if (direction == orderList[j]) {
@@ -104,10 +106,11 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 					}
 						else
 							direction = orderList[j];
-					
+					*/
 			}
-			else if (orderList[j] == "Dn") {		// Decodertest
-				if (direction == "") {
+			else if (orderList[j] == "Dn") {
+				direction = orderList[j];	// Decodertest
+			/*	if (direction == "" || direction == " ") {
 					direction = orderList[j];
 				}
 				else if (direction == orderList[j]) {
@@ -130,7 +133,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 					}
 					else
 						direction = orderList[j];
-
+*/
 					
 			}
 			else {
@@ -156,7 +159,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 				}
 				if (k == 14) {
 					if (Toggle_Next_Line) {
-						Next_Line(NumLine);
+						Next_Line();
 						Toggle_Next_Line = false;
 
 					}
@@ -164,8 +167,8 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 					
 					vector<bool> doubles = checkForDoubles(Testspeicher, TestArea, k);
 					Testspeicher.push_back(TestArea);		//Abspeichern des aktuell getesteten Bereichs
-					Zeichne_Rechteck(TestArea, direction, orderList[j], NumPerLine, NumLine); 
-					Zeichne_Dubletten(doubles, NumPerLine);
+					Zeichne_Rechteck(TestArea, direction, orderList[j]); 
+			//		if (Testspeicher.size()>1)Zeichne_Dubletten(doubles);
 				}
 			}
 			j++;
