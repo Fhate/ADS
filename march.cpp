@@ -5,20 +5,20 @@ using namespace std;
 
 vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler) {
 //Funktion prüft die aktuell zu zeichnende Umgebung auf Dubletten unter bereits gespeicherten Umgebungen, aktuell wird dabei jede Umgebung einzeln verglichen. 
-	vector<bool> doublesbuf(Testspeicher.size());
+	vector<bool> doubles(Testspeicher.size());
 	for (int k = 0; k < Testspeicher.size(); k++) {
-		doublesbuf[k] = false;
+		doubles[k] = true;
 		for (int l = 0; l < TestArea.size(); l++) {
 			if (l == Speicherzaehler || TestArea[l].getValue() == Testspeicher[k][l].getValue()) {
 				continue;
 			}
 			else if (TestArea[l].getValue() != Testspeicher[k][l].getValue()) {
-				doublesbuf[k] = true;
+				doubles[k] = false;
 			}
 			
 		}
 	}
-	return doublesbuf;
+	return doubles;
 }
 
 bool MarchElement::checkOne() {
@@ -168,7 +168,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 					vector<bool> doubles = checkForDoubles(Testspeicher, TestArea, k);
 					Testspeicher.push_back(TestArea);		//Abspeichern des aktuell getesteten Bereichs
 					Zeichne_Rechteck(TestArea, direction, orderList[j]); 
-			//		if (Testspeicher.size()>1)Zeichne_Dubletten(doubles);
+					if (Testspeicher.size()>1)Zeichne_Dubletten(doubles);
 				}
 			}
 			j++;
