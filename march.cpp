@@ -5,15 +5,15 @@ using namespace std;
 
 vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler) {
 //Funktion prüft die aktuell zu zeichnende Umgebung auf Dubletten unter bereits gespeicherten Umgebungen, aktuell wird dabei jede Umgebung einzeln verglichen. 
-	vector<bool> doubles(Testspeicher.size());
-	for (int k = 0; k < Testspeicher.size(); k++) {
-		doubles[k] = true;
-		for (int l = 0; l < TestArea.size(); l++) {
-			if (l == Speicherzaehler || TestArea[l].getValue() == Testspeicher[k][l].getValue()) {
-				continue;
+	vector<bool> doubles(Testspeicher.size());			
+	for (int k = 0; k < Testspeicher.size(); k++) {			//k läuft die bisher abgespeicherten Elemente ab
+		doubles[k] = true;									//standardmäßig wird jeder Wert auf TRUE gesetzt
+		for (int l = 0; l < TestArea.size(); l++) {			//läuft die Werte des aktuellen Speicherabbilds ab
+			if (l == Speicherzaehler || TestArea[l].getValue() == Testspeicher[k][l].getValue()) {	//durch l==Speicherzaehler wird sichergestellt, dass der aktuell getestete Eintrag keinen Einfluss auf die Kennzeichnung als Dubletten nimmt.
+				continue;				
 			}
 			else if (TestArea[l].getValue() != Testspeicher[k][l].getValue()) {
-				doubles[k] = false;
+				doubles[k] = false;						//FALSE-setzen wenn die Werte nicht übereinstimmen
 			}
 			
 		}
@@ -69,7 +69,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 						n = 0;
 						i++;
 					}
-					else {							//Neuer March Test
+					else {							//Neuer March Test wird in neuer Zeile dargestellt, wir laufen den Speicherbereich von Anfang an durch  
 						Toggle_Next_Line = true;
 						n = 0;
 						j++;
@@ -78,13 +78,13 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 					}
 				}
 				else {
-					j++;
+					j++;				//Zugriff auf nächste Operation
 				}
 
-				continue;
+				continue;	
 			}
 			else if (orderList[j] == "Up") {		// Decodertest
-				direction = orderList[j];
+				direction = orderList[j];			//Einstellen der Richtung
 				/*if (direction == "" || direction == " ") {
 					direction = orderList[j];
 				}
@@ -108,9 +108,9 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 							direction = orderList[j];
 					*/
 			}
-			else if (orderList[j] == "Dn") {
-				direction = orderList[j];	// Decodertest
-			/*	if (direction == "" || direction == " ") {
+			else if (orderList[j] == "Dn") {	
+				direction = orderList[j];	//Richtungsänderung
+			/*	if (direction == "" || direction == " ") {			//Dekodertest
 					direction = orderList[j];
 				}
 				else if (direction == orderList[j]) {
@@ -139,7 +139,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 			else {
 				if (orderList[j] == "W0") {
 					TestArea[k].writeZero();
-					n++;
+					n++;				//n hochzaehlen, um die Laenge des Testdurchlaufs zu zählen
 				}
 				else if (orderList[j] == "W1") {
 					TestArea[k].writeOne();
@@ -157,18 +157,18 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 						cout << "An der Stelle " << k << " befindet sich ein Fehler(1)." << endl;
 					}
 				}
-				if (k == 14) {
+				if (k == 14) {			//an der 14. Stelle wird der Speicherbereich gezeichnet. 
 					if (Toggle_Next_Line) {
-						Next_Line();
+						Next_Line();				//Zeilenumbruch in GDE
 						Toggle_Next_Line = false;
 
 					}
 
 					
-					vector<bool> doubles = checkForDoubles(Testspeicher, TestArea, k);
+					vector<bool> doubles = checkForDoubles(Testspeicher, TestArea, k);		//TRUE-FALSE Kennzeichnung der Dubletten, dabei wird der aktuelle Speicher mit allen vorherigen verglichen.
 					Testspeicher.push_back(TestArea);		//Abspeichern des aktuell getesteten Bereichs
-					Zeichne_Rechteck(TestArea, direction, orderList[j]); 
-					if (Testspeicher.size()>1)Zeichne_Dubletten(doubles);
+					Zeichne_Rechteck(TestArea, direction, orderList[j]);					//Zeichnen der Rechtecke in der GDE
+					if (Testspeicher.size()>1)Zeichne_Dubletten(doubles);					//beim ersten Diagramm müssen keine Dubletten gezeichnet werden.
 				}
 			}
 			j++;

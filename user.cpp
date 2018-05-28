@@ -46,28 +46,31 @@ struct _Anfang_Dim {
 void Zeichne_Dubletten(vector<bool> &doubles) {
 	int dx = 150;
 	int dy = 170;
-	int Dublettenzaehler = 0;
+	int Dublettenzaehler = 0;		//Anzahl der Dubletten, die gezeichnet werden.
 	for (int i = 0; i < AnzahlProZeile.size(); i++) {
 		for (int j = 0; j < AnzahlProZeile[i]; j++) {
 			if ((j + (i > 0 ? i*AnzahlProZeile[i - 1] : 0)) >= (doubles.size())) {
-				i = AnzahlProZeile.size();
+				i = AnzahlProZeile.size();			//zusaetzliche Abbruchbedingung, falls wir auf nicht existierende Elemente zuzugreifen versuchen.
 				break;
 			}
 
-			if (doubles[j + (i > 0 ? i*AnzahlProZeile[i - 1] : 0)]) {
+			if (doubles[j + (i > 0 ? i*AnzahlProZeile[i - 1] : 0)]) {		//für i=0 muss 0 eingetragen werden, damit die Reihen korrekt berechnet werden.
 				Dublettenzaehler++;
 				//Dublette kennzeichnen, Farbiges X oder ähnliches, dabei verschieben um dx*j und dy*i
 				//50 ist der Startwert, mit dem Durchlaufen der beiden Schleifen werden somit alle Darstellungen abgearbeitet.
 				text(50 + dx*j + 10*(doubles.size()-1), 50 + dy*i - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", ERRORSIGNS[doubles.size()-1], 11);
-			}
+			}		
 		}
 	}
 	if (Dublettenzaehler > 0) {
+
+		//Kennzeichnung der Schaubilder, gerade aufgenommenes wird hier markiert, allerdings muss der Versatz auf das naechste Koordinatenset rueckgaengig gemacht werden
 		if (AnzahlProZeile[ZeilenZahl] >= 2) {
+			//Kennzeichnung wenn das naechste Bild in der selben Zeile angezeigt werden wuerde
 			text(anfang_dim.x1 - dx + 10 * (doubles.size() - 1), anfang_dim.y1 - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", ERRORSIGNS[doubles.size() - 1], 11);
 		}
 		else if (AnzahlProZeile[ZeilenZahl] = 1) {
-
+			//Kennzeichnung, wenn eine neue Zeile erreicht wurde
 			text(50 + dx*AnzahlProZeile[ZeilenZahl-1] +10 * (doubles.size() - 1), anfang_dim.y1 - dy - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", ERRORSIGNS[doubles.size() - 1], 11);
 		}
 		
@@ -76,9 +79,9 @@ void Zeichne_Dubletten(vector<bool> &doubles) {
 }
 
 void Next_Line() {
-	anfang_dim.y1 += 170;
-	anfang_dim.x1 = 50;
-	AnzahlProZeile.push_back(0);
+	anfang_dim.y1 += 170;	//Versetzen um eine Zeile nach unten
+	anfang_dim.x1 = 50;	//Zuruecksetzen auf Startpos
+	AnzahlProZeile.push_back(0);	//Anlegen eines neuen Elements
 	ZeilenZahl++;		//Mitzaehlen der Zeilen
 }
 
@@ -174,11 +177,15 @@ void user_main()
 
 	FILE *inf;
 	char fistr[100];
-	printf("Enter filename:\n");
-	cin >> fistr;
-	inf = fopen(fistr, "r");
-	if (inf == NULL) {
-		printf("Cannot open input file %s\n", fistr);
+	while(1) {
+		printf("Enter filename:\n");
+		cin >> fistr;
+		inf = fopen(fistr, "r");
+		if (inf == NULL) {
+			printf("Cannot open input file %s\n", fistr);
+			continue;
+		}
+		break;
 	}
 	CParser obj;
 	obj.InitParse(inf, stderr, stdout);
