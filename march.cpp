@@ -40,7 +40,108 @@ void MarchElement::writeZero() {
 int MarchElement::getValue() {
 	return value;
 }
+/*
+Dekodertest zur Üperprüfung der richtigen Adressierung:
+1.Es wird geschaut ob ein Richtungswechsel statt gefunden hat.
+2.Ob der erste Test R0 oder R1 ist, wenn ja ob bei dem Vorherigen die letzte Anweisung ein W0 oder W1 war.
 
+*/
+string MarchTest::decodertest(string direction, vector<string> &orderList, int j) {
+	bool found = false;
+	if (direction == "" || direction == " ") {	
+		return orderList[j];
+	}
+	else if (direction == orderList[j]) {
+		return orderList[j];
+	}
+	else {
+		if (orderList[j+1]== "R0")
+		{
+			for (int ii = j;ii!=0;ii--)
+			{
+				if ((orderList[ii]== "W0")&&(orderList[ii+1]=="March"))
+				{
+					found = true;
+				}
+				else if ((found==true)&&(orderList[ii-1]=="March"))
+				{
+					if (orderList[ii+1]=="Ud")
+					{
+						continue;
+					}
+					else
+					{
+						cout << "Dekodertest" << endl;
+						string help1, help2;
+						for (int iii = j; orderList[iii] != "March" ; iii++)
+						{
+
+							help1 = help1 + " " + orderList[iii];
+							if (iii==orderList.size()-1)
+							{
+								break;
+							}
+						}
+						for (int iii = ii; iii != j -1; iii++)
+						{
+							help2 = help2 + " " + orderList[iii];
+						}
+						cout << help2 << endl;
+						cout << help1 << endl;
+						return orderList[j];
+					}
+				}
+				
+			}
+			return orderList[j];
+		}
+		else if (orderList[j + 1] == "R1")
+		{
+			for (int ii = j;ii != 0;ii--)
+			{
+				if ((orderList[ii] == "W1") && (orderList[ii + 1] == "March"))
+				{
+					found = true;
+				}
+				else if ((found == true) && (orderList[ii - 1] == "March"))
+				{
+					if (orderList[ii + 1] == "Ud")
+					{
+						continue;
+					}
+					else
+					{
+						cout << "Dekodertest" << endl;
+						string help1, help2;
+						for (int iii = j; orderList[iii] != "March"; iii++)
+						{
+							help1 = help1 + " " + orderList[iii];
+							if (iii == orderList.size()-1)
+							{
+								break;
+							}
+						}
+						for (int iii = ii; iii != j - 1; iii++)
+						{
+							help2 = help2 + " " + orderList[iii];
+						}
+						cout << help2 << endl;
+						cout << help1 << endl;
+						return orderList[j];
+					}
+				}
+
+			}
+			return orderList[j];
+		}
+		else
+		{
+			return orderList[j];
+		}
+
+	}
+
+}
 
 
 void MarchTest::RunTest(vector<string> orderList, int length) {
@@ -83,58 +184,14 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 
 				continue;	
 			}
-			else if (orderList[j] == "Up") {		// Decodertest
-				direction = orderList[j];			//Einstellen der Richtung
-				/*if (direction == "" || direction == " ") {
-					direction = orderList[j];
-				}
-				else if (direction == orderList[j]) {
-					direction = orderList[j];
-				}
-				else
-					if ((j - 4) != 0) {
-						if (orderList[j - 2] == "W0") {
-							if (orderList[j + 1] == "R0")
-								cout << "Decodertest" << endl;
-							direction = orderList[j];
-						}
-						else if (orderList[j - 2] == "W1") {
-							if (orderList[j + 1] == "R1")
-								cout << "Decodertest" << endl;
-							direction = orderList[j];
-						}
-					}
-						else
-							direction = orderList[j];
-					*/
+			else if (orderList[j] == "Up") {	
+				direction = decodertest(direction, orderList, j);					
 			}
 			else if (orderList[j] == "Dn") {	
-				direction = orderList[j];	//Richtungsänderung
-			/*	if (direction == "" || direction == " ") {			//Dekodertest
-					direction = orderList[j];
-				}
-				else if (direction == orderList[j]) {
-					direction = orderList[j];
-				}
-				else
-					if ((j - 4) != 0) {
-						if (orderList[j - 2] == "W0") {
-							if (orderList[j + 1] == "R0") {
-								cout << "Decodertest" << endl;
-								direction = orderList[j];
-							}
-						}
-						else if (orderList[j - 2] == "W1") {
-							if (orderList[j + 1] == "R1") {
-								cout << "Decodertest" << endl;
-								direction = orderList[j];
-							}
-						}
-					}
-					else
-						direction = orderList[j];
-*/
-					
+				direction = decodertest(direction, orderList, j);					
+			}
+			else if (orderList[j] == "Ud") {
+				direction = "Up";			
 			}
 			else {
 				if (orderList[j] == "W0") {

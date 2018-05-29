@@ -191,7 +191,7 @@ void user_main()
 	obj.InitParse(inf, stderr, stdout);
 	//obj.pr_tokentable();
 	obj.yyparse(helpary);
-	for (int ii = 0; ii<helpary.size();ii++) {
+	for (int ii = 0; ii<helpary.size();ii++) {	// Ausgabe der Parserdaten
 		cout << "[" << ii << "]= " << helpary.at(ii) << endl;
 	}
 	

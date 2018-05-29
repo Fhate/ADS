@@ -28,5 +28,5 @@ public:
 
 	MarchTest() {};
 	void RunTest(vector<string> orderList, int length);		//orderList = array mit OPerationsbefehlen, length = Laenge des Bereichs
-
+	string decodertest(string direction, vector<string> &orderList, int j);
 };
