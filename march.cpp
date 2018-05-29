@@ -3,19 +3,17 @@
 using namespace std;
 
 
-vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler) {
+vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler, int &Befehlszaehler) {
 //Funktion prüft die aktuell zu zeichnende Umgebung auf Dubletten unter bereits gespeicherten Umgebungen, aktuell wird dabei jede Umgebung einzeln verglichen. 
 	vector<bool> doubles(Testspeicher.size());			
 	for (int k = 0; k < Testspeicher.size(); k++) {			//k läuft die bisher abgespeicherten Elemente ab
 		doubles[k] = true;									//standardmäßig wird jeder Wert auf TRUE gesetzt
-		for (int l = 0; l < TestArea.size(); l++) {			//läuft die Werte des aktuellen Speicherabbilds ab
-			if (l == Speicherzaehler || TestArea[l].getValue() == Testspeicher[k][l].getValue()) {	//durch l==Speicherzaehler wird sichergestellt, dass der aktuell getestete Eintrag keinen Einfluss auf die Kennzeichnung als Dubletten nimmt.
-				continue;				
-			}
-			else if (TestArea[l].getValue() != Testspeicher[k][l].getValue()) {
-				doubles[k] = false;						//FALSE-setzen wenn die Werte nicht übereinstimmen
-			}
-			
+		for (int l = 0; l < TestArea.size(); l++) {	//läuft die Werte des aktuellen Speicherabbilds ab
+			if (TestArea[l].getValue() != Testspeicher[k][l].getValue()||k<Befehlszaehler) {
+				doubles[k] = false;						//FALSE-setzen wenn die Werte nicht übereinstimmen (wird im allgemeinen so sein)
+			}else if (l == Speicherzaehler || TestArea[l].getValue() == Testspeicher[k][l].getValue()) {	//durch l==Speicherzaehler wird sichergestellt, dass der aktuell getestete Eintrag keinen Einfluss auf die Kennzeichnung als Dubletten nimmt.
+				doubles[k] = true;
+			}			
 		}
 	}
 	return doubles;
@@ -47,6 +45,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 	
 	bool Toggle_Next_Line = false;				//KOntrollvariable, die das Springen in eine neue Zeile steuert.
 	nMarch = orderList.size();
+	AnzahlTests = 0;
 	j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
 	vector<MarchElement> TestArea(length);		//Speicherbereich den der Test durchläuft
 	vector<vector<MarchElement>> Testspeicher;	//Hier werden die einzelnen Testumgebungen abgespeichert um sie auf Dubletten pruefen zu koennen.
@@ -70,6 +69,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 						i++;
 					}
 					else {							//Neuer March Test wird in neuer Zeile dargestellt, wir laufen den Speicherbereich von Anfang an durch  
+						AnzahlTests++;
 						Toggle_Next_Line = true;
 						n = 0;
 						j++;
@@ -165,7 +165,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 					}
 
 					
-					vector<bool> doubles = checkForDoubles(Testspeicher, TestArea, k);		//TRUE-FALSE Kennzeichnung der Dubletten, dabei wird der aktuelle Speicher mit allen vorherigen verglichen.
+					vector<bool> doubles = checkForDoubles(Testspeicher, TestArea, k, n);		//TRUE-FALSE Kennzeichnung der Dubletten, dabei wird der aktuelle Speicher mit allen vorherigen verglichen.
 					Testspeicher.push_back(TestArea);		//Abspeichern des aktuell getesteten Bereichs
 					Zeichne_Rechteck(TestArea, direction, orderList[j]);					//Zeichnen der Rechtecke in der GDE
 					if (Testspeicher.size()>1)Zeichne_Dubletten(doubles);					//beim ersten Diagramm müssen keine Dubletten gezeichnet werden.

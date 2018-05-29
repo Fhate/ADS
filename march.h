@@ -18,10 +18,11 @@ public:
 	int getValue();
 	};
 
-vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler);
+vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler, int &Befehlszaehler);
 
 class MarchTest {
 public:
+	int AnzahlTests;
 	int nMarch;		//Anzahl der Operationen
 	string direction = " ";
 	int i, j, k;	//Laufvariablen für Schleifen

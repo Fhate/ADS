@@ -16,8 +16,8 @@
 #ifndef _USE_OLD_OSTREAMS
 using namespace std;
 #endif 
-
-const char ERRORSIGNS[26] = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y', };
+//DOUBLESIGNS wird benutzt um Dubletten zu kennzeichnen
+const char DOUBLESIGNS[26] = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y', };
 COLORREF Colref[]={BLACK,RED,GREEN,BLUE,YELLOW,BROWN};
 int Colind=0;
 vector<int> AnzahlProZeile;
@@ -44,11 +44,12 @@ struct _Anfang_Dim {
 }anfang_dim;
 
 void Zeichne_Dubletten(vector<bool> &doubles) {
-	int dx = 150;
+	int dx = 150;	//Zurück auf die Anfangsposition
 	int dy = 170;
-	int Dublettenzaehler = 0;		//Anzahl der Dubletten, die gezeichnet werden.
-	for (int i = 0; i < AnzahlProZeile.size(); i++) {
-		for (int j = 0; j < AnzahlProZeile[i]; j++) {
+	int Dublettenzaehler = 0; //Anzahl der Dubletten, die gezeichnet werden sollen.
+
+	for (int i = 0; i < AnzahlProZeile.size(); i++) {		//i läuft die Zeilen entlang
+		for (int j = 0; j < AnzahlProZeile[i]; j++) {		//j läuft die Anzahl der Bilder pro Zeile entlang
 			if ((j + (i > 0 ? i*AnzahlProZeile[i - 1] : 0)) >= (doubles.size())) {
 				i = AnzahlProZeile.size();			//zusaetzliche Abbruchbedingung, falls wir auf nicht existierende Elemente zuzugreifen versuchen.
 				break;
@@ -58,7 +59,7 @@ void Zeichne_Dubletten(vector<bool> &doubles) {
 				Dublettenzaehler++;
 				//Dublette kennzeichnen, Farbiges X oder ähnliches, dabei verschieben um dx*j und dy*i
 				//50 ist der Startwert, mit dem Durchlaufen der beiden Schleifen werden somit alle Darstellungen abgearbeitet.
-				text(50 + dx*j + 10*(doubles.size()-1), 50 + dy*i - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", ERRORSIGNS[doubles.size()-1], 11);
+				text(50 + dx*j + 10*(doubles.size()-1), 50 + dy*i - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size()-1], 11);
 			}		
 		}
 	}
@@ -67,11 +68,13 @@ void Zeichne_Dubletten(vector<bool> &doubles) {
 		//Kennzeichnung der Schaubilder, gerade aufgenommenes wird hier markiert, allerdings muss der Versatz auf das naechste Koordinatenset rueckgaengig gemacht werden
 		if (AnzahlProZeile[ZeilenZahl] >= 2) {
 			//Kennzeichnung wenn das naechste Bild in der selben Zeile angezeigt werden wuerde
-			text(anfang_dim.x1 - dx + 10 * (doubles.size() - 1), anfang_dim.y1 - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", ERRORSIGNS[doubles.size() - 1], 11);
+			text(anfang_dim.x1 - dx + 10 * (doubles.size() - 1), anfang_dim.y1 - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size() - 1], 11);
 		}
-		else if (AnzahlProZeile[ZeilenZahl] = 1) {
+		else if (AnzahlProZeile[ZeilenZahl] <= 1) {
 			//Kennzeichnung, wenn eine neue Zeile erreicht wurde
-			text(50 + dx*AnzahlProZeile[ZeilenZahl-1] +10 * (doubles.size() - 1), anfang_dim.y1 - dy - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", ERRORSIGNS[doubles.size() - 1], 11);
+			//text(50 + dx*AnzahlProZeile[ZeilenZahl-1] + 10 * (doubles.size() - 1), anfang_dim.y1 - dy - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size() - 1], 11);
+			text(50 +  10 * (doubles.size() - 1), anfang_dim.y1 - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size() - 1], 11);
+
 		}
 		
 }
@@ -79,6 +82,7 @@ void Zeichne_Dubletten(vector<bool> &doubles) {
 }
 
 void Next_Line() {
+//Funktion um die Startkoordinaten anzupassen beim Zeilenumbruch
 	anfang_dim.y1 += 170;	//Versetzen um eine Zeile nach unten
 	anfang_dim.x1 = 50;	//Zuruecksetzen auf Startpos
 	AnzahlProZeile.push_back(0);	//Anlegen eines neuen Elements
@@ -86,6 +90,7 @@ void Next_Line() {
 }
 
 void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string operation)
+//Zeichnen des aktuell festgehaltenen Speicherbereichs, benötigt die Richtung, die aktuelle Operation sowie einen Zeiger auf den Speicherbereich als Eingangsparameter, ohne Rückgabewert
 {
 	int ii, jj, zz;
 
@@ -116,7 +121,7 @@ void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string o
 			line(anfang_dim.x1 - 15, anfang_dim.y1 + 5, anfang_dim.x1 - 5, anfang_dim.y1 + 5, BLACK);
 			line(anfang_dim.x1 - 5, anfang_dim.y1 + 5, anfang_dim.x1 - 10, anfang_dim.y1, BLACK);
 			line(anfang_dim.x1 - 10, anfang_dim.y1, anfang_dim.x1 - 15, anfang_dim.y1 + 5, BLACK);
-			//Position der Compiler
+			//Position während des Testdurchlaufs
 			text(anfang_dim.x1 + 44, anfang_dim.y1 + 30, 35, RED, 0, CENTER_ALIGN, "_", 11);
 				
 	}
@@ -127,11 +132,11 @@ void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string o
 			line(anfang_dim.x1 - 15, anfang_dim.y2 - 40, anfang_dim.x1 - 5, anfang_dim.y2 - 40, BLACK);
 			line(anfang_dim.x1 - 5, anfang_dim.y2 - 40, anfang_dim.x1 - 10, anfang_dim.y2 - 35, BLACK);
 			line(anfang_dim.x1 - 10, anfang_dim.y2 - 35, anfang_dim.x1 - 15, anfang_dim.y2 - 40, BLACK);
-			//Position der Compiler
+			//Position während des Testdurchlaufs
 			text(anfang_dim.x1 + 44, anfang_dim.y1 + 30, 35, RED, 0, CENTER_ALIGN, "_", 11);
 	}
 	
-	//Rechtecke Ausgabe
+	//Zeichnen des Rahmens
 	rectangle(anfang_dim.x1, anfang_dim.y1, anfang_dim.x2, anfang_dim.y2, anfang_dim.cframe, anfang_dim.cfill = -1);
 			
 	//Koordinaten erweitern
