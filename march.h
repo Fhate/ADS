@@ -18,7 +18,7 @@ public:
 	int getValue();
 	};
 
-vector<bool> checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int &Speicherzaehler, int &Befehlszaehler);
+void checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int Speicherzaehler);
 
 class MarchTest {
 public:

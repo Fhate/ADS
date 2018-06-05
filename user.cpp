@@ -49,35 +49,21 @@ void Zeichne_Dubletten(vector<bool> &doubles) {
 	int Dublettenzaehler = 0; //Anzahl der Dubletten, die gezeichnet werden sollen.
 
 	for (int i = 0; i < AnzahlProZeile.size(); i++) {		//i läuft die Zeilen entlang
-		for (int j = 0; j < AnzahlProZeile[i]; j++) {		//j läuft die Anzahl der Bilder pro Zeile entlang
-			if ((j + (i > 0 ? i*AnzahlProZeile[i - 1] : 0)) >= (doubles.size())) {
-				i = AnzahlProZeile.size();			//zusaetzliche Abbruchbedingung, falls wir auf nicht existierende Elemente zuzugreifen versuchen.
-				break;
-			}
-
-			if (doubles[j + (i > 0 ? i*AnzahlProZeile[i - 1] : 0)]) {		//für i=0 muss 0 eingetragen werden, damit die Reihen korrekt berechnet werden.
+		
+		if (i >= doubles.size())return;
+			if (doubles[i]) {		//für i=0 muss 0 eingetragen werden, damit die Reihen korrekt berechnet werden.
 				Dublettenzaehler++;
 				//Dublette kennzeichnen, Farbiges X oder ähnliches, dabei verschieben um dx*j und dy*i
 				//50 ist der Startwert, mit dem Durchlaufen der beiden Schleifen werden somit alle Darstellungen abgearbeitet.
-				text(50 + dx*j + 10*(doubles.size()-1), 50 + dy*i - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size()-1], 11);
+
+				text(50 + dx*(AnzahlProZeile[i]-1) + 10 * (doubles.size() - 1), 50 + dy*i - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size() - 1], 11);
 			}		
-		}
 	}
 	if (Dublettenzaehler > 0) {
 
-		//Kennzeichnung der Schaubilder, gerade aufgenommenes wird hier markiert, allerdings muss der Versatz auf das naechste Koordinatenset rueckgaengig gemacht werden
-		if (AnzahlProZeile[ZeilenZahl] >= 2) {
-			//Kennzeichnung wenn das naechste Bild in der selben Zeile angezeigt werden wuerde
-			text(anfang_dim.x1 - dx + 10 * (doubles.size() - 1), anfang_dim.y1 - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size() - 1], 11);
-		}
-		else if (AnzahlProZeile[ZeilenZahl] <= 1) {
-			//Kennzeichnung, wenn eine neue Zeile erreicht wurde
-			//text(50 + dx*AnzahlProZeile[ZeilenZahl-1] + 10 * (doubles.size() - 1), anfang_dim.y1 - dy - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size() - 1], 11);
-			text(50 +  10 * (doubles.size() - 1), anfang_dim.y1 - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size() - 1], 11);
-
-		}
+			text(50+dx*AnzahlProZeile[AnzahlProZeile.size()-1] + 10 * (doubles.size() - 1), 50+dy*(AnzahlProZeile.size()) - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size() - 1], 11);
 		
-}
+	}
 
 }
 
