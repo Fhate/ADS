@@ -243,6 +243,9 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 		}
 
 		if (j >= nMarch) {		//faengt Fehler ab 
+			if (k == 15) {
+				checkForDoubles(Testspeicher, TestArea, k - 1);
+			}
 			j = j - n;
 			n = 0;
 			i++;
