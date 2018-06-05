@@ -47,6 +47,7 @@ int MarchElement::getValue() {
 }
 /*
 Dekodertest zur Üperprüfung der richtigen Adressierung:
+Variablen: Momentane Richtung,Vector mit den Parserdaten,momentane Stelle in dem Vector
 1.Es wird geschaut ob ein Richtungswechsel statt gefunden hat.
 2.Ob der erste Test R0 oder R1 ist, wenn ja ob bei dem Vorherigen die letzte Anweisung ein W0 oder W1 war.
 
@@ -62,13 +63,13 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 	else {
 		if (orderList[j+1]== "R0")
 		{
-			for (int ii = j;ii!=0;ii--)
+			for (int ii = j;ii!=0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
 			{
 				if ((orderList[ii]== "W0")&&(orderList[ii+1]=="March"))
 				{
 					found = true;
 				}
-				else if ((found==true)&&(orderList[ii-1]=="March"))
+				else if ((found==true)&&(orderList[ii-1]=="March"))//läuft runter bis zum Anfang eines March
 				{
 					if (orderList[ii+1]=="Ud")
 					{
@@ -78,16 +79,16 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 					{
 						cout << "Dekodertest" << endl;
 						string help1, help2;
-						for (int iii = j; orderList[iii] != "March" ; iii++)
+						for (int iii = j; orderList[iii] != "March" ; iii++)//Erzeugt den March von dem momentanen Punkt j aus.
 						{
 
 							help1 = help1 + " " + orderList[iii];
-							if (iii==orderList.size()-1)
+							if (iii==orderList.size()-1)//Abbruchbedingung für ende des Programms
 							{
 								break;
 							}
 						}
-						for (int iii = ii; iii != j -1; iii++)
+						for (int iii = ii; iii != j -1; iii++)//Erzeugt den March,der unterhalb momentanen Punkt j  ist.
 						{
 							help2 = help2 + " " + orderList[iii];
 						}
@@ -100,7 +101,7 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 			}
 			return orderList[j];
 		}
-		else if (orderList[j + 1] == "R1")
+		else if (orderList[j + 1] == "R1")	// Das gleiche wie oben nur für R1 und W1
 		{
 			for (int ii = j;ii != 0;ii--)
 			{
