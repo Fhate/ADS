@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "march.h"
-using namespace std;
+
 
 
 
@@ -46,14 +46,16 @@ int MarchElement::getValue() {
 	return value;
 }
 /*
-Dekodertest zur Üperprüfung der richtigen Adressierung:
-Variablen: Momentane Richtung,Vector mit den Parserdaten,momentane Stelle in dem Vector
+Funktion: Dekodertest zur Üperprüfung der richtigen Adressierung.
+Input: (string direction, vector<string> &orderList, int j)
+Output: string direction
 1.Es wird geschaut ob ein Richtungswechsel statt gefunden hat.
 2.Ob der erste Test R0 oder R1 ist, wenn ja ob bei dem Vorherigen die letzte Anweisung ein W0 oder W1 war.
 
 */
 string MarchTest::decodertest(string direction, vector<string> &orderList, int j) {
 	bool found = false;
+	bool err = false;
 	if (direction == "" || direction == " ") {	
 		return orderList[j];
 	}
@@ -65,7 +67,11 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 		{
 			for (int ii = j;ii!=0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
 			{
-				if ((orderList[ii]== "W0")&&(orderList[ii+1]=="March"))
+				if ((orderList[ii]== "W1"))
+				{
+					err = true;
+				}
+				else if ((err==false) && (orderList[ii] == "W0"))
 				{
 					found = true;
 				}
@@ -77,7 +83,7 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 					}
 					else
 					{
-						cout << "Dekodertest" << endl;
+						std::cout << "Dekodertest" << endl;
 						string help1, help2;
 						for (int iii = j; orderList[iii] != "March" ; iii++)//Erzeugt den March von dem momentanen Punkt j aus.
 						{
@@ -92,8 +98,8 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 						{
 							help2 = help2 + " " + orderList[iii];
 						}
-						cout << help2 << endl;
-						cout << help1 << endl;
+						std::cout << help2 << endl;
+						std::cout << help1 << endl;
 						return orderList[j];
 					}
 				}
@@ -105,7 +111,11 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 		{
 			for (int ii = j;ii != 0;ii--)
 			{
-				if ((orderList[ii] == "W1") && (orderList[ii + 1] == "March"))
+				if ((orderList[ii] == "W0"))//(orderList[ii]== "W0")&&(orderList[ii+1]=="March")
+				{
+					err = true;
+				}
+				else if ((err == false) && (orderList[ii] == "W1"))
 				{
 					found = true;
 				}
@@ -117,7 +127,7 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 					}
 					else
 					{
-						cout << "Dekodertest" << endl;
+						std::cout << "Dekodertest" << endl;
 						string help1, help2;
 						for (int iii = j; orderList[iii] != "March"; iii++)
 						{
@@ -131,8 +141,8 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 						{
 							help2 = help2 + " " + orderList[iii];
 						}
-						cout << help2 << endl;
-						cout << help1 << endl;
+						std::cout << help2 << endl;
+						std::cout << help1 << endl;
 						return orderList[j];
 					}
 				}
@@ -217,13 +227,13 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 				else if (orderList[j] == "R0") {
 					n++;
 					if (!TestArea[k].checkZero()) {
-						cout << "An der Stelle " << k << " befindet sich ein Fehler(0)." << endl;
+						std::cout << "An der Stelle " << k << " befindet sich ein Fehler(0)." << endl;
 					}
 				}
 				else if (orderList[j] == "R1") {
 					n++;
 					if (!TestArea[k].checkOne()) {
-						cout << "An der Stelle " << k << " befindet sich ein Fehler(1)." << endl;
+						std::cout << "An der Stelle " << k << " befindet sich ein Fehler(1)." << endl;
 					}
 				}
 				if (k == 14) {			//an der 14. Stelle wird der Speicherbereich gezeichnet. 

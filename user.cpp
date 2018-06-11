@@ -180,11 +180,8 @@ void user_main()
 	}
 	CParser obj;
 	obj.InitParse(inf, stderr, stdout);
-	//obj.pr_tokentable();
 	obj.yyparse(helpary);
-	for (int ii = 0; ii<helpary.size();ii++) {	// Ausgabe der Parserdaten
-		cout << "[" << ii << "]= " << helpary.at(ii) << endl;
-	}
+	
 	
 
 	int ww, hh;

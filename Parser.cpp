@@ -57,23 +57,22 @@ int	CParser::yyparse(vector<string> &helpar)
 	*	Go parse things!
 	*/
 	while ((tok = yylex()) != 0) {
-		printf("%d ", tok);
+		;
 		if (tok == STRING1)
-			printf("%s %s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+			;
 		else
 			if (tok == INTEGER1)
-				printf("%s %d ", IP_revToken_table[tok].c_str(), yylval.i);
+				;
 			else
 				if (tok == IDENTIFIER) {
-					printf("%s %s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
 					helpar.push_back(yylval.s);
 				}
 				else
 					if (tok >= TOKENSTART)
-						printf("%s ", IP_revToken_table[tok].c_str());
+						;
 					else
-						printf("%c ", tok);
-		if (!prflag)printf("\n");
+						;
+		if (!prflag);
 	}
 	return 0;
 
