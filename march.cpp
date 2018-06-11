@@ -50,7 +50,7 @@ Funktion: Dekodertest zur Üperprüfung der richtigen Adressierung.
 Input: (string direction, vector<string> &orderList, int j)
 Output: string direction
 1.Es wird geschaut ob ein Richtungswechsel statt gefunden hat.
-2.Ob der erste Test R0 oder R1 ist, wenn ja ob bei dem Vorherigen die letzte Anweisung ein W0 oder W1 war.
+2.Ob der erste Test R0 oder R1 ist, wenn ja ob bei dem Vorherigen die letzte SChreibanweisung ein W0 oder W1 war.
 
 */
 string MarchTest::decodertest(string direction, vector<string> &orderList, int j) {
@@ -70,8 +70,9 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 				if ((orderList[ii]== "W1"))
 				{
 					err = true;
+					return orderList[j];
 				}
-				else if ((err==false) && (orderList[ii] == "W0"))
+				else if ((err==false) && (orderList[ii] == "W0")) 
 				{
 					found = true;
 				}
@@ -114,6 +115,7 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 				if ((orderList[ii] == "W0"))//(orderList[ii]== "W0")&&(orderList[ii+1]=="March")
 				{
 					err = true;
+					return orderList[j];
 				}
 				else if ((err == false) && (orderList[ii] == "W1"))
 				{
