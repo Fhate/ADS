@@ -301,6 +301,11 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 						std::cout << "An der Stelle " << k << " befindet sich ein Fehler. Hier wurde fälschlicherweise eine Eins erwartet." << endl;
 					}
 				}
+				else
+				{	
+					cout << "Der aktuelle Befehl " << orderList[j] << " kann nicht verarbeitet werden. ";
+					continue;
+				}
 				if (k == 14) {			//an der 14. Stelle wird der Speicherbereich gezeichnet. 
 					if (Toggle_Next_Line) {
 						Next_Line();				//Zeilenumbruch in GDE
