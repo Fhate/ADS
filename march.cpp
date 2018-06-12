@@ -292,7 +292,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 				else if (orderList[j] == "R0") {
 					n++;
 					if (!TestArea[k].checkZero()) {
-						std::cout << "An der Stelle " << k << " befindet sich ein Fehler. Der aktuelle Befehl ist " << orderList[k] << " Hier wurde faelschlicherweise eine Null erwartet." << endl;
+						std::cout << "An der Stelle " << k << " befindet sich ein Fehler. Der aktuelle Befehl ist " << orderList[j] << " Hier wurde faelschlicherweise eine Null erwartet." << endl;
 					}
 				}
 				else if (orderList[j] == "R1") {
