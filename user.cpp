@@ -19,7 +19,6 @@ using namespace std;
 //DOUBLESIGNS wird benutzt um Dubletten zu kennzeichnen
 const char DOUBLESIGNS[26] = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y', };
 COLORREF Colref[]={BLACK,RED,GREEN,BLUE,YELLOW,BROWN};
-int Colind=0;
 vector<int> AnzahlProZeile;
 int ZeilenZahl;
 struct _Anfang_Dim {
