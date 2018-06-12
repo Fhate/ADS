@@ -1,0 +1,4 @@
+Begin
+March 1 (Up,W1,R1,W0);  
+March 2 (Dn,R0,W1,R0);
+End

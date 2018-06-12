@@ -134,7 +134,7 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 					}
 					else
 					{
-						std::cout << "Dekodertest" << endl;
+						std::cout << "\n\nDekodertest:\n" << endl;
 						string help1, help2;
 						for (int iii = j; orderList[iii] != "March" ; iii++)//Erzeugt den March von dem momentanen Punkt j aus.
 						{
@@ -150,7 +150,7 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 							help2 = help2 + " " + orderList[iii];
 						}
 						std::cout << help2 << endl;
-						std::cout << help1 << endl;
+						std::cout << help1<<"\n\n" << endl;
 						return orderList[j];
 					}
 				}
@@ -178,7 +178,7 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 					}
 					else
 					{
-						std::cout << "Dekodertest" << endl;
+						std::cout << "\n\nDekodertest:\n" << endl;
 						string help1, help2;
 						for (int iii = j; orderList[iii] != "March"; iii++)
 						{
@@ -193,7 +193,7 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 							help2 = help2 + " " + orderList[iii];
 						}
 						std::cout << help2 << endl;
-						std::cout << help1 << endl;
+						std::cout << help1<<"\n\n" << endl;
 						return orderList[j];
 					}
 				}
