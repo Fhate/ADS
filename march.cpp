@@ -70,7 +70,6 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 				if ((orderList[ii]== "W1"))
 				{
 					err = true;
-					return orderList[j];
 				}
 				else if ((err==false) && (orderList[ii] == "W0")) 
 				{
@@ -115,7 +114,6 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 				if ((orderList[ii] == "W0"))//(orderList[ii]== "W0")&&(orderList[ii+1]=="March")
 				{
 					err = true;
-					return orderList[j];
 				}
 				else if ((err == false) && (orderList[ii] == "W1"))
 				{
