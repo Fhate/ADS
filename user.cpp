@@ -22,6 +22,10 @@ COLORREF Colref[]={BLACK,RED,GREEN,BLUE,YELLOW,BROWN};
 int Colind=0;
 vector<int> AnzahlProZeile;
 int ZeilenZahl;
+
+/*
+Struct für die anfang Dimensionen der Rechecken 
+*/
 struct _Anfang_Dim {
 	int x1;
 	int y1;
@@ -29,18 +33,6 @@ struct _Anfang_Dim {
 	int y2;
 	int cframe=BLACK;
 	int cfill = -1;
-	void Werte_korrig()
-	{
-		if ((x1 | x2) > 800) {
-			x1 = 50;
-			x2 = 160;
-		}
-		if ((y1 | y2) > 800) {
-			y1 = 50;
-			y2 = 200;
-		}
-	};
-
 }anfang_dim;
 
 void Zeichne_Dubletten(vector<bool> &doubles) {
@@ -75,6 +67,13 @@ void Next_Line() {
 	ZeilenZahl++;		//Mitzaehlen der Zeilen
 }
 
+/*
+Funktion: Zeichne_Rechteck um die Umgebungmuster in der GDE graphisch zu darstellen
+Input: Die Daten des Tests, Richtung des Tests, die ausgeführte Operation
+Output: Keine Rückgabewert
+1- Zeichnet die Umgebungsmuster und die Pfeilrichtung von den einzelnen Operationen von jedem Test
+*/
+
 void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string operation)
 //Zeichnen des aktuell festgehaltenen Speicherbereichs, benötigt die Richtung, die aktuelle Operation sowie einen Zeiger auf den Speicherbereich als Eingangsparameter, ohne Rückgabewert
 {
@@ -82,8 +81,6 @@ void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string o
 
 
 	if (anfang_dim.x1 > 1470) {
-		//anfang_dim.y1 = anfang_dim.y1 + 180;
-		//anfang_dim.x1 = anfang_dim.x1 - 760;
 		Next_Line();
 	}
 
@@ -93,7 +90,7 @@ void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string o
 			
 	text(anfang_dim.x1 + 50, anfang_dim.y1 - 20, 15, BLACK, 0, CENTER_ALIGN, "%s",operation.c_str(), 11);
 			
-	//Durchlaufen des Tests
+	//Ausgabe der Umgebungsmuster 
 	for (zz = 0;zz < 4;zz++) {
 		for (jj = 0;jj < 5;jj++) {
 				text(anfang_dim.x1 + 20 * jj + 25, anfang_dim.y1 + 10 + 25 * zz, 30, BLACK, 0, CENTER_ALIGN, "%d", TestArea[19-(jj + 4 * zz)], 11);
@@ -192,15 +189,8 @@ void user_main()
 		set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
 		clrscr();
 		if(1){
-		/*	cout << "Startvorschlag: X1=50 , y1=50 \n\n";
-			cout << "x1 eingeben: ";              //anfangposition eingeben
-			cin >> anfang_dim.x1;
-			cout << "y1 eingeben: ";
-			cin >> anfang_dim.y1;
-			*/
 			anfang_dim.x1 = 50;
 			anfang_dim.y1 = 50;
-			anfang_dim.Werte_korrig();  //werte überprüfen und korriegieren
 			MarchTest MT;
 			MT.RunTest(helpary, 20);
 			cout << "Rechtecke gezeichnet !\n";
