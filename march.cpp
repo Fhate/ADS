@@ -3,20 +3,32 @@
 
 
 
-
+/* Funktion void checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int Speicherzaehler)
+	Argumente: 
+		Testspeicher
+		TestArea
+		Speicherzaehler
+	
+	Rückgabetyp 
+		-
+	Die bereits gespeicherten Tests werden nacheinander mit dem letzten durchgeführten Test verglichen. 
+	Wenn die Testumgebungen übereinstimmen, wird in einem internen Zwischenspeicher (vector<bool> doubles) der entsprechende Wert auf True gesetzt.
+	Nachdem die bereits gespeicherten Tests verglichen wurden, wird der zuletzt durchgeführte Test ebenfalls in Testspeicher abgespeichert.
+	Wenn der Testspeicher mehr als einen Eintrag enthält, also nach dem Durchführen und Prüfen des zweiten Tests wird die Funktion zum Kennzeichnen der Dubletten aufgerufen.
+				
+*/ 
 void checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int Speicherzaehler) {
-//Funktion prüft die aktuell zu zeichnende Umgebung auf Dubletten unter bereits gespeicherten Umgebungen, aktuell wird dabei jede Umgebung einzeln verglichen. 
 	vector<bool> doubles(Testspeicher.size());			
 	for (int k = 0; k < Testspeicher.size(); k++) {			//k läuft die bisher abgespeicherten Elemente ab
 		doubles[k] = false;									//standardmäßig wird jeder Wert auf false gesetzt
 		for (int l = 0; l < TestArea.size(); l++) {	//läuft die Werte des aktuellen Speicherabbilds ab
-			if (l == Speicherzaehler+1)continue;
+			if (l == Speicherzaehler+1)continue;		//durch l==Speicherzaehler^+1 wird sichergestellt, dass der aktuell getestete Eintrag keinen Einfluss auf die Kennzeichnung als Dubletten nimmt.
 			if (TestArea[l].getValue() == Testspeicher[k][l].getValue()) {
 				doubles[k] = true;
-			}	//FALSE-setzen wenn die Werte nicht übereinstimmen (wird im allgemeinen so sein)
-			if (TestArea[l].getValue() != Testspeicher[k][l].getValue()) {	//durch l==Speicherzaehler wird sichergestellt, dass der aktuell getestete Eintrag keinen Einfluss auf die Kennzeichnung als Dubletten nimmt.
+			}	//true-setzen wenn die Werte übereinstimmen 
+			if (TestArea[l].getValue() != Testspeicher[k][l].getValue()) {	
 				doubles[k] = false;
-				break;
+				break;						//sobald ein Wert nicht übereinstimmt, kann die aktuell zu vergleichende Testumgebung übersprungen und die nächste geprüft werden.
 			}			
 		}
 	}		
@@ -25,23 +37,62 @@ void checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchEle
 
 	return;
 }
-
+/*
+Funktion bool MarchElement::checkOne()
+	Argumente:
+		keine
+	Ausgabe:
+		bool
+	Diese Funktion prüft den Wert des MarchElements auf den Wert Eins.
+*/
 bool MarchElement::checkOne() {
 	return (value == 1);
 }
 
+/*
+Funktion bool MarchElement::checkZero()
+Argumente:
+keine
+Ausgabe:
+bool
+Diese Funktion prüft den Wert des MarchElements auf den Wert Null.
+*/
 bool MarchElement::checkZero() {
 	return (value == 0);
 }
 
+/*
+Funktion void MarchElement::writeOne()
+Argumente:
+keine
+Ausgabe:
+void
+Diese Funktion setzt den Wert des MarchElements auf den Wert Eins.
+*/
 void MarchElement::writeOne() {
 	value = 1;
 }
 
+/*
+Funktion void MarchElement::writeZero()
+Argumente:
+keine
+Ausgabe:
+void
+Diese Funktion setzt den Wert des MarchElements auf den Wert Null.
+*/
 void MarchElement::writeZero() {
 	value = 0;
 }
 
+/*
+Funktion int MarchElement::getValue()
+Argumente:
+keine
+Ausgabe:
+int
+Diese Funktion gibt den Wert des MarchElements zurück.
+*/
 int MarchElement::getValue() {
 	return value;
 }
@@ -160,7 +211,21 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 	}
 
 }
+/*
+Funktion void MarchTest::RunTest(vector<string> orderList, int length)
+	Argumente:
+		orderList,
+		length
+	Rückgabe
+		void
 
+	Diese Funktion führt die im Argument orderList dargestellten March Tests durch. Hierbei wird ein Testbereich in der entsprechenden Länge erzeugt und Element für Element durchlaufen.
+	Bei jedem Element wird die orderList durchlaufen, allerdings wird der nächste March Test erst durchgeführt(ein auszuwertendes "March" nur übersprüngen), wenn der gesamte Speicherbereich bereits getestet wurde.
+	Ist dies nicht der Fall, wird der Befehlszaehler auf den ersten Befehl des aktuellen Tests zurückgesetzt. 
+	Die Richtung wird zu Beginn jeder Operation bestimmt, je nachdem ob der aktuelle Test "UP" oder "DOWN" als Eintrag hat.
+	Bei Beginn eines neuen March Tests wird in der GDE ein Zeilenumbruch erzeugt. 
+	Bei Erreichen der 14. Stelle des Speichers wird die Testumgebung gezeichnet. 
+*/
 
 void MarchTest::RunTest(vector<string> orderList, int length) {
 	
@@ -229,13 +294,13 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 				else if (orderList[j] == "R0") {
 					n++;
 					if (!TestArea[k].checkZero()) {
-						std::cout << "An der Stelle " << k << " befindet sich ein Fehler(0)." << endl;
+						std::cout << "An der Stelle " << k << " befindet sich ein Fehler. Hier wurde fälschlicherweise eine Null erwartet." << endl;
 					}
 				}
 				else if (orderList[j] == "R1") {
 					n++;
 					if (!TestArea[k].checkOne()) {
-						std::cout << "An der Stelle " << k << " befindet sich ein Fehler(1)." << endl;
+						std::cout << "An der Stelle " << k << " befindet sich ein Fehler. Hier wurde fälschlicherweise eine Eins erwartet." << endl;
 					}
 				}
 				if (k == 14) {			//an der 14. Stelle wird der Speicherbereich gezeichnet. 
