@@ -171,6 +171,7 @@
     </CustomBuildStep>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="in3.txt" />
     <Text Include="MarchA.txt" />
     <Text Include="MarchB.txt" />
     <Text Include="MarchC-.txt" />

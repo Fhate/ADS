@@ -187,13 +187,13 @@ void user_main()
 		get_windowsize(&ww, &hh);
 		set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
 		clrscr();
-		if(1){
+		
 			anfang_dim.x1 = 50;
 			anfang_dim.y1 = 50;
 			MarchTest MT;
 			MT.RunTest(helpary, 20);
 			cout << "Rechtecke gezeichnet !\n";
-		}
+		
 	
 
 		Restart();						// Den "Restart"-Button malen und auf eine Aktivierung warten.

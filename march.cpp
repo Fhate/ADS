@@ -22,7 +22,7 @@ void checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchEle
 	for (int k = 0; k < Testspeicher.size(); k++) {			//k läuft die bisher abgespeicherten Elemente ab
 		doubles[k] = false;									//standardmäßig wird jeder Wert auf false gesetzt
 		for (int l = 0; l < TestArea.size(); l++) {	//läuft die Werte des aktuellen Speicherabbilds ab
-			if (l == Speicherzaehler+1)continue;		//durch l==Speicherzaehler^+1 wird sichergestellt, dass der aktuell getestete Eintrag keinen Einfluss auf die Kennzeichnung als Dubletten nimmt.
+			if (l == Speicherzaehler+1)continue;		//durch l==Speicherzaehler+1 wird sichergestellt, dass der aktuell getestete Eintrag keinen Einfluss auf die Kennzeichnung als Dubletten nimmt.
 			if (TestArea[l].getValue() == Testspeicher[k][l].getValue()) {
 				doubles[k] = true;
 			}	//true-setzen wenn die Werte übereinstimmen 
@@ -107,6 +107,7 @@ Output: string direction
 string MarchTest::decodertest(string direction, vector<string> &orderList, int j) {
 	bool found = false;
 	bool err = false;
+	string help1, help2; // baut die March strings für ausgabe
 	if (direction == "" || direction == " ") {	
 		return orderList[j];
 	}
@@ -116,94 +117,196 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 	else {
 		if (orderList[j+1]== "R0")
 		{
-			for (int ii = j;ii!=0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
+			for (int iii = j; iii != orderList.size() ; iii++)//Läuft den March von dem momentanen Punkt j aus hoch.
 			{
-				if ((orderList[ii]== "W1"))
+				if ((orderList[iii] == "March"))	// gegenn nächsten March laufen
 				{
-					err = true;
-				}
-				else if ((err==false) && (orderList[ii] == "W0")) 
-				{
-					found = true;
-				}
-				else if ((found==true)&&(orderList[ii-1]=="March"))//läuft runter bis zum Anfang eines March
-				{
-					if (orderList[ii+1]=="Ud")
+					if (orderList[iii - 1] == "W1")		// Bedingung für Decodertest beim hoch laufend
 					{
-						continue;
-					}
-					else
-					{
-						std::cout << "\n\nDekodertest:\n" << endl;
-						string help1, help2;
-						for (int iii = j; orderList[iii] != "March" ; iii++)//Erzeugt den March von dem momentanen Punkt j aus.
+						for (int ii = j;ii != 0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 und R1 suchen
 						{
-
-							help1 = help1 + " " + orderList[iii];
-							if (iii==orderList.size()-1)//Abbruchbedingung für ende des Programms
+							if ((orderList[ii] == "W1"))
 							{
-								break;
+								help2 = " " + orderList[ii - 2] + help2;
+								err = true;
+								
 							}
+							else if ((err == false) && (orderList[ii] == "W0"))//erstes gefunde W0 
+							{
+								help2 = " " + orderList[ii - 2] + help2;
+								found = true;
+							}
+							else if ((found == true) && (orderList[ii - 1] == "March"))//läuft runter bis zum Anfang eines March
+							{
+								if ((orderList[ii] == "Ud") || orderList[ii + 1] != "R1")// zweite Bedingung für decodertest, dass komplementäre Einlesen des vorherigen Marchsuchen
+								{
+									help2 = " " + orderList[ii - 2] + help2;
+									continue;
+								}
+								else
+								{
+									std::cout << "\n\nDekodertest:\n" << endl;
+									std::cout << help2 << endl;
+									std::cout << help1 << "\n\n" << endl;
+									return orderList[j];
+								}
+							}
+							else
+								if ((ii >= 0) && (orderList[ii-2] != "March"))
+								{
+									help2 = " " + orderList[ii - 2] + help2;
+								}
+
 						}
-						for (int iii = ii; iii != j -1; iii++)//Erzeugt den March,der unterhalb momentanen Punkt j  ist.
-						{
-							help2 = help2 + " " + orderList[iii];
-						}
-						std::cout << help2 << endl;
-						std::cout << help1<<"\n\n" << endl;
-						return orderList[j];
 					}
+					break;
 				}
-				
+				// eigentlich das selbe wie oben nur das der zu testen March kein Nachfolger hat
+				else if(iii == (orderList.size()-1)) { 
+					if (orderList[iii] == "W1")			// Bedingung für Decodertest nach vorne laufend
+					{
+						help1 = help1 + " " + orderList[iii];
+						//die selbe for schleife wie oben!!
+							for (int ii = j;ii != 0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
+							{
+								if ((orderList[ii] == "W1"))
+								{
+									help2 = " " + orderList[ii - 2] + help2;
+									err = true;
+									
+								}
+								else if ((err == false) && (orderList[ii] == "W0"))
+								{
+									help2 = " " + orderList[ii-2]+help2;
+									found = true;
+								}
+								else if ((found == true) && (orderList[ii - 1] == "March"))//läuft runter bis zum Anfang eines March
+								{
+									if ((orderList[ii] == "Ud") || orderList[ii + 1] != "R1")
+									{
+										help2 = " " + orderList[ii - 2] + help2;
+										continue;
+									}
+									else
+									{
+										std::cout << "\n\nDekodertest:\n" << endl;
+										std::cout << help2 << endl;
+										std::cout << help1 << "\n\n" << endl;
+										return orderList[j];
+									}
+								}
+								else
+									if ((ii >= 0) && (orderList[ii-2]!= "March"))
+									{
+										help2 = " " + orderList[ii - 2] + help2;
+									}
+								
+							}
+					}
+					break;
+				}
+				else
+					help1 = help1 + " " + orderList[iii];
 			}
-			return orderList[j];
+			return orderList[j];// für fehler die nicht agbefangen wurden
 		}
-		else if (orderList[j + 1] == "R1")	// Das gleiche wie oben nur für R1 und W1
+		else if (orderList[j + 1] == "R1")	// Das gleiche wie oben nur für R1 und W1!!!!!
 		{
-			for (int ii = j;ii != 0;ii--)
+			for (int iii = j; iii != orderList.size(); iii++)
 			{
-				if ((orderList[ii] == "W0"))
+				if ((orderList[iii] == "March"))	
 				{
-					err = true;
-				}
-				else if ((err == false) && (orderList[ii] == "W1"))
-				{
-					found = true;
-				}
-				else if ((found == true) && (orderList[ii - 1] == "March"))
-				{
-					if (orderList[ii + 1] == "Ud")
+					if (orderList[iii - 1] == "W0")		
 					{
-						continue;
-					}
-					else
-					{
-						std::cout << "\n\nDekodertest:\n" << endl;
-						string help1, help2;
-						for (int iii = j; orderList[iii] != "March"; iii++)
+						for (int ii = j;ii != 0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
 						{
-							help1 = help1 + " " + orderList[iii];
-							if (iii == orderList.size()-1)
+							if ((orderList[ii] == "W0"))
 							{
-								break;
+								help2 = " " + orderList[ii - 2] + help2;
+								err = true;
+								
 							}
-						}
-						for (int iii = ii; iii != j - 1; iii++)
-						{
-							help2 = help2 + " " + orderList[iii];
-						}
-						std::cout << help2 << endl;
-						std::cout << help1<<"\n\n" << endl;
-						return orderList[j];
-					}
-				}
+							else if ((err == false) && (orderList[ii] == "W1"))
+							{
+								help2 = " " + orderList[ii - 2] + help2;
+								found = true;
+							}
+							else if ((found == true) && (orderList[ii - 1] == "March"))//läuft runter bis zum Anfang eines March
+							{
+								if ((orderList[ii] == "Ud") || orderList[ii + 1] != "R0")
+								{
+									help2 = " " + orderList[ii - 2] + help2;
+									continue;
+								}
+								else
+								{
+									std::cout << "\n\nDekodertest:\n" << endl;
+									std::cout << help2 << endl;
+									std::cout << help1 << "\n\n" << endl;
+									return orderList[j];
+								}
+							}
+							else
+								if ((ii >= 0) && (orderList[ii-2] != "March"))
+								{
+									help2 = " " + orderList[ii - 2] + help2;
+								}
 
+						}
+					}
+					break;
+				}
+				else if (iii == (orderList.size() - 1)) { 
+					if (orderList[iii] == "W0")			
+					{
+						help1 = help1 + " " + orderList[iii];
+						for (int ii = j;ii != 0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
+						{
+							if ((orderList[ii] == "W0"))
+							{
+								help2 = " " + orderList[ii - 2] + help2;
+								err = true;
+								
+							}
+							else if ((err == false) && (orderList[ii] == "W1"))
+							{
+								help2 = " " + orderList[ii - 2] + help2;
+								found = true;
+							}
+							else if ((found == true) && (orderList[ii - 1] == "March"))//läuft runter bis zum Anfang eines March
+							{
+								if ((orderList[ii] == "Ud") || orderList[ii + 1] != "R0")
+								{
+									help2 = " " + orderList[ii - 2] + help2;
+									continue;
+								}
+								else
+								{
+									std::cout << "\n\nDekodertest:\n" << endl;
+									std::cout << help2 << endl;
+									std::cout << help1 << "\n\n" << endl;
+									return orderList[j];
+								}
+							}
+							else
+								if ((ii >= 0) && (orderList[ii-2] != "March"))
+								{
+									help2 = " " + orderList[ii - 2] + help2;
+								}
+
+						}
+					}
+					break;
+				}
+				else
+					help1 = help1 + " " + orderList[iii];
 			}
+		
 			return orderList[j];
 		}
 		else
 		{
-			return orderList[j];
+			return "Up";// deafault
 		}
 
 	}
@@ -227,7 +330,7 @@ Funktion void MarchTest::RunTest(vector<string> orderList, int length)
 
 void MarchTest::RunTest(vector<string> orderList, int length) {
 	
-	bool Toggle_Next_Line = false;				//KOntrollvariable, die das Springen in eine neue Zeile steuert.
+	bool Toggle_Next_Line = false;				//Kontrollvariable, die das Springen in eine neue Zeile steuert.
 	nMarch = orderList.size();
 	AnzahlTests = 0;
 	j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
@@ -280,7 +383,7 @@ void MarchTest::RunTest(vector<string> orderList, int length) {
 			else if (orderList[j] == "Ud") {
 				direction = "Up";			
 			}
-			else {
+			else {	// Eignerblock für Lese und Schreibzugriffe, da sonst immer gezeichnet wird
 				if (orderList[j] == "W0") {
 					TestArea[k].writeZero();
 					n++;				//n hochzaehlen, um die Laenge des Testdurchlaufs zu zählen

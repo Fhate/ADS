@@ -138,5 +138,6 @@
     <Text Include="MarchC-.txt" />
     <Text Include="MarchC.txt" />
     <Text Include="MATS+.txt" />
+    <Text Include="in3.txt" />
   </ItemGroup>
 </Project>
