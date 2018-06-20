@@ -101,7 +101,8 @@ Funktion: Dekodertest zur Üperprüfung der richtigen Adressierung.
 Input: (string direction, vector<string> &orderList, int j)
 Output: string direction
 1.Es wird geschaut ob ein Richtungswechsel statt gefunden hat.
-2.Ob der erste Test R0 oder R1 ist, wenn ja ob bei dem Vorherigen die letzte SChreibanweisung ein W0 oder W1 war.
+2.Ob der erste Test R0 oder R1 ist, wenn ja ob in der letzten Anweisung des selben Test ein komplementaeres schreiben ist.
+3.Bei dem March davor ob W0 oder W1 die letzte Anweisung und ob die erste Anweisung ein komplementaeres lesen dazu ist.
 
 */
 string MarchTest::decodertest(string direction, vector<string> &orderList, int j) {
