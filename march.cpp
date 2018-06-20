@@ -121,9 +121,9 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 			{
 				if ((orderList[iii] == "March"))	// gegenn nächsten March laufen
 				{
-					if (orderList[iii - 1] == "W1")		// Bedingung für Decodertest beim hoch laufend
+					if (orderList[iii-1] == "W1")		// Bedingung für Decodertest beim hoch laufend
 					{
-						for (int ii = j;ii != 0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 und R1 suchen
+						for (int ii = j;ii != 1;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 und R1 suchen
 						{
 							if ((orderList[ii] == "W1"))
 							{
@@ -142,6 +142,10 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 								{
 									help2 = " " + orderList[ii - 2] + help2;
 									continue;
+								}
+								else if (orderList[ii]== orderList[j])	// beim runterlaufen auf die gleiche richtung gestoßen
+								{
+									return orderList[j];
 								}
 								else
 								{
@@ -167,7 +171,7 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 					{
 						help1 = help1 + " " + orderList[iii];
 						//die selbe for schleife wie oben!!
-							for (int ii = j;ii != 0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
+							for (int ii = j;ii != 1;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
 							{
 								if ((orderList[ii] == "W1"))
 								{
@@ -186,6 +190,10 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 									{
 										help2 = " " + orderList[ii - 2] + help2;
 										continue;
+									}
+									else if (orderList[ii] == orderList[j])	// beim runterlaufen auf die gleiche richtung gestoßen
+									{
+										return orderList[j];
 									}
 									else
 									{
@@ -214,11 +222,11 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 		{
 			for (int iii = j; iii != orderList.size(); iii++)
 			{
-				if ((orderList[iii] == "March"))	
+				if ((orderList[iii] == "March"))
 				{
-					if (orderList[iii - 1] == "W0")		
+					if (orderList[iii-1] == "W0")		
 					{
-						for (int ii = j;ii != 0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
+						for (int ii = j;ii != 1;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
 						{
 							if ((orderList[ii] == "W0"))
 							{
@@ -237,6 +245,10 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 								{
 									help2 = " " + orderList[ii - 2] + help2;
 									continue;
+								}
+								else if (orderList[ii] == orderList[j])	// beim runterlaufen auf die gleiche richtung gestoßen
+								{
+									return orderList[j];
 								}
 								else
 								{
@@ -260,7 +272,7 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 					if (orderList[iii] == "W0")			
 					{
 						help1 = help1 + " " + orderList[iii];
-						for (int ii = j;ii != 0;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
+						for (int ii = j;ii != 1;ii--)//vom Momentanwert Rückwärtslaufen und nach W0 suchen
 						{
 							if ((orderList[ii] == "W0"))
 							{
@@ -279,6 +291,10 @@ string MarchTest::decodertest(string direction, vector<string> &orderList, int j
 								{
 									help2 = " " + orderList[ii - 2] + help2;
 									continue;
+								}
+								else if (orderList[ii] == orderList[j])	// beim runterlaufen auf die gleiche richtung gestoßen
+								{
+									return orderList[j];
 								}
 								else
 								{
