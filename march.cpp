@@ -9,7 +9,7 @@
 		TestArea
 		Speicherzaehler
 	
-	Rückgabetyp 
+	Rückgabetyp :
 		-
 	Die bereits gespeicherten Tests werden nacheinander mit dem letzten durchgeführten Test verglichen. 
 	Wenn die Testumgebungen übereinstimmen, wird in einem internen Zwischenspeicher (vector<bool> doubles) der entsprechende Wert auf True gesetzt.
