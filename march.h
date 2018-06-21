@@ -8,9 +8,9 @@
 using namespace std;
 class MarchElement
 {
-private:
-	int value;
 public:
+	int value;
+
 	bool checkZero();
 	bool checkOne();
 	void writeOne();
