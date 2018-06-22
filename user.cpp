@@ -4,7 +4,6 @@
 
 #include "stdafx.h"
 #include "Parser.h"
-#include "march.h"
 #include "User.h"
 #include "graphics\graphicfunctions.h"
 #include <iostream>
@@ -174,9 +173,7 @@ void user_main()
 		}
 		break;
 	}
-	CParser obj;
-	obj.InitParse(inf, stderr, stdout);
-	obj.yyparse(helpary);
+	
 	
 	
 
@@ -187,13 +184,16 @@ void user_main()
 		get_windowsize(&ww, &hh);
 		set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
 		clrscr();
-		if(1){
+		
 			anfang_dim.x1 = 50;
 			anfang_dim.y1 = 50;
-			MarchTest MT;
-			MT.RunTest(helpary, 20);
+			//MarchTest MT;
+			//MT.RunTest(helpary, 20);
+			CParser obj;
+			obj.InitParse(inf, stderr, stdout);
+			obj.yyparse(20);
 			cout << "Rechtecke gezeichnet !\n";
-		}
+		
 	
 
 		Restart();						// Den "Restart"-Button malen und auf eine Aktivierung warten.

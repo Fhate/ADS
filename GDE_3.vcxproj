@@ -123,7 +123,6 @@
     <ClCompile Include="GDE_3Doc.cpp" />
     <ClCompile Include="GDE_3View.cpp" />
     <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="march.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -140,7 +139,6 @@
     <ClInclude Include="GDE_3Doc.h" />
     <ClInclude Include="GDE_3View.h" />
     <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="march.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -171,6 +169,7 @@
     </CustomBuildStep>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="in3.txt" />
     <Text Include="MarchA.txt" />
     <Text Include="MarchB.txt" />
     <Text Include="MarchC-.txt" />
