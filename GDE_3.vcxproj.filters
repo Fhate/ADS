@@ -54,9 +54,6 @@
     <ClCompile Include="Parser.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="march.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GDE_3.h">
@@ -102,9 +99,6 @@
       <Filter>Console</Filter>
     </ClInclude>
     <ClInclude Include="Parser.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="march.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

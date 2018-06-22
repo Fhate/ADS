@@ -14,6 +14,9 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <cstdlib>
+#include <iostream>
+#include "User.h"
 
 using namespace std;
 
@@ -30,9 +33,33 @@ const int IDENTIFIER = 4;
 const int INTEGER1 = 5;
 const int TOKENSTART = 300;
 
+
+
+class MarchElement
+{
+private:
+	int value;
+public:
+	bool checkZero();
+	bool checkOne();
+	void writeOne();
+	void writeZero();
+	int getValue();
+};
+
+
 class CParser
 {
 public:
+	//---------------------------------------------------------------
+	int AnzahlTests;
+	int nMarch;		//Anzahl der Operationen
+	string direction = " ";
+	int i, j, k;	//Laufvariablen für Schleifen
+
+	string decodertest(string direction, vector<string> &orderList, vector<string> &orderListalt,int j);
+	void RunTest(vector<string> orderList, int length, int laengeorderlist);
+	//---------------------------------------------------------------
 
 	string yytext;								//input buffer
 	struct tyylval {								//value return
@@ -53,11 +80,19 @@ public:
 	void CParser::yyerror(char *ers);			//error reporter
 	int CParser::IP_MatchToken(string &tok);	//checks the token
 	void CParser::InitParse(FILE *inp, FILE *err, FILE *lst);
-	int	CParser::yyparse(vector<string> &helpary);						//parser
+	int	CParser::yyparse(int length);						//parser
 	void CParser::pr_tokentable();				//test output for tokens
 	void CParser::IP_init_token_table();		//loads the tokens
 	void CParser::Load_tokenentry(string str, int index);//load one token
 	void CParser::PushString(char c);			//Used for dtring assembly
 	CParser() { IP_LineNumber = 1;ugetflag = 0;prflag = 0; };	//Constructor
+
 };
+
+
+void checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int Speicherzaehler);
+void Next_Line();
+void Zeichne_Dubletten(vector<bool> &doubles);
+void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string operation);
+
 #endif
