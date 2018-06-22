@@ -127,25 +127,30 @@ Nachdem die bereits gespeicherten Tests verglichen wurden, wird der zuletzt durc
 Wenn der Testspeicher mehr als einen Eintrag enthält, also nach dem Durchführen und Prüfen des zweiten Tests wird die Funktion zum Kennzeichnen der Dubletten aufgerufen.
 
 */
-void checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int Speicherzaehler) {
-	vector<bool> doubles(Testspeicher.size());
-	for (int k = 0; k < Testspeicher.size(); k++) {			//k läuft die bisher abgespeicherten Elemente ab
-		doubles[k] = false;									//standardmäßig wird jeder Wert auf false gesetzt
-		for (int l = 0; l < TestArea.size(); l++) {	//läuft die Werte des aktuellen Speicherabbilds ab
-			if (l == Speicherzaehler + 1)continue;		//durch l==Speicherzaehler+1 wird sichergestellt, dass der aktuell getestete Eintrag keinen Einfluss auf die Kennzeichnung als Dubletten nimmt.
-			if (TestArea[l].getValue() == Testspeicher[k][l].getValue()) {
-				doubles[k] = true;
-			}	//true-setzen wenn die Werte übereinstimmen 
-			if (TestArea[l].getValue() != Testspeicher[k][l].getValue()) {
-				doubles[k] = false;
-				break;						//sobald ein Wert nicht übereinstimmt, kann die aktuell zu vergleichende Testumgebung übersprungen und die nächste geprüft werden.
-			}
+vector<vector<bool>> checkForDoubles(vector<vector<vector<MarchElement>>> &Testspeicher) {
+
+	vector<vector<bool>> doubles(Testspeicher.size(), vector<bool>());
+	for (int k = 0; k < Testspeicher.size(); k++) {			//k läuft die bisher abgespeicherten Elemente ab								//standardmäßig wird jeder Wert auf false gesetzt
+		//for (int l = 0; l < (Testspeicher.at(k)).size(); l++) {	//läuft die Werte des aktuellen Speicherabbilds ab
+		doubles[k].assign(k, false);
+			for (int l=0; l<k; l++ ){
+				
+				for (int j = 0; j < Testspeicher[k][0].size(); j++) {	
+					if (j == 14)continue;
+					
+					//durch l==Speicherzaehler+1 wird sichergestellt, dass der aktuell getestete Eintrag keinen Einfluss auf die Kennzeichnung als Dubletten nimmt.
+					if (Testspeicher[k][0][j].getValue() == Testspeicher[l][0][j].getValue()) {
+						doubles[k][l] = true;
+						
+					}	//true-setzen wenn die Werte übereinstimmen 
+					if (Testspeicher[k][0][j].getValue() != Testspeicher[l][0][j].getValue()) {
+						doubles[k][l] = false;
+						break;						//sobald ein Wert nicht übereinstimmt, kann die aktuell zu vergleichende Testumgebung übersprungen und die nächste geprüft werden.
+					}
+				}
 		}
 	}
-	Testspeicher.push_back(TestArea);//Abspeichern des aktuell getesteten Bereichs
-	if (Testspeicher.size() > 1)Zeichne_Dubletten(doubles);	//beim ersten Diagramm müssen keine Dubletten gezeichnet werden.
-
-	return;
+	return doubles;
 }
 /*
 Funktion bool MarchElement::checkOne()
@@ -347,7 +352,7 @@ int	CParser::yyparse(int length)
 	j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
 	vector<MarchElement> TestArea(length);		//Speicherbereich den der Test durchläuft
 	vector<vector<vector<MarchElement>>> Testspeicher;
-	(Testspeicher).resize(6);
+	(Testspeicher).resize(10);
 	vector<vector<MarchElement>> *Testpointer = &Testspeicher.front();
 	vector<string> orderList;
 	vector<string> orderListalt;
@@ -509,8 +514,19 @@ int	CParser::yyparse(int length)
 					}						
 		if (!prflag);
 	}
+	int blabla=0;
+	for (int i = 0; i < Testspeicher.size();) {
+		if (Testspeicher[i].empty()) {
+			Testspeicher.erase(Testspeicher.begin()+i);
+		}
+		else {
+			i++;
+		}
+	}
+	Testspeicher.shrink_to_fit();
+	vector<vector<bool>> doubles=checkForDoubles(Testspeicher);
 	return 0;
-
+	
 }
 //------------------------------------------------------------------------
 
