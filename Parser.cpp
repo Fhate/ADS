@@ -346,7 +346,9 @@ int	CParser::yyparse(int length)
 	AnzahlTests = 0;
 	j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
 	vector<MarchElement> TestArea(length);		//Speicherbereich den der Test durchläuft
-	vector<vector<MarchElement>> Testspeicher;
+	vector<vector<vector<MarchElement>>> Testspeicher;
+	(Testspeicher).resize(6);
+	vector<vector<MarchElement>> *Testpointer = &Testspeicher.front();
 	vector<string> orderList;
 	vector<string> orderListalt;
 	int alt = 0;
@@ -399,7 +401,7 @@ int	CParser::yyparse(int length)
 						{
 							nMarch = orderList.size();
 							j = 0;
-							for (i = 0; i < length; ) {
+							for (i = 0; i < length;) {
 								int n = 0;					//Anzahl der Operationen(R/W) im aktuellen Marchtest, die bereits durchgelaufen sind.
 								while (j<nMarch) {
 									if (direction == "Up") {
@@ -486,22 +488,24 @@ int	CParser::yyparse(int length)
 												Toggle_Next_Line = false;
 
 											}
-											Zeichne_Rechteck(TestArea, direction, orderList[j]);					//Zeichnen der Rechtecke in der GDE
+											(*Testpointer).push_back(TestArea);
+
+											//Zeichne_Rechteck(TestArea, direction, orderList[j]);					//Zeichnen der Rechtecke in der GDE
 										}
 									}
 									j++;
 								}
 
 								if (j >= nMarch) {		//faengt Fehler ab 
-									if (k == 15) {
-										checkForDoubles(Testspeicher, TestArea, k - 1);
-									}
-									j = j - n;
+ 									j = j - n;
 									n = 0;
 									i++;
 								}
 							}
+							Testpointer++;
+
 						}
+						
 					}						
 		if (!prflag);
 	}
