@@ -525,6 +525,7 @@ int	CParser::yyparse(int length)
 	}
 	Testspeicher.shrink_to_fit();
 	vector<vector<bool>> doubles=checkForDoubles(Testspeicher);
+	//Zeichnen der Rechtecke und der Dubletten, Zugriff über doubles und Testspeicher.
 	return 0;
 	
 }
