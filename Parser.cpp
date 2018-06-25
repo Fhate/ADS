@@ -213,80 +213,90 @@ int MarchElement::getValue() {
 }
 /*
 Funktion: Dekodertest zur Üperprüfung der richtigen Adressierung.
-Input: (string direction, vector<string> &orderList, int j)
+Input: (string direction, vector<string> &orderList, vector<string> &orderListalt,int j)
 Output: string direction
 1.Es wird geschaut ob ein Richtungswechsel statt gefunden hat.
-2.Ob der erste Test R0 oder R1 ist, wenn ja ob in der letzten Anweisung des selben Test ein komplementaeres schreiben ist.
-3.Bei dem March davor ob W0 oder W1 die letzte Anweisung und ob die erste Anweisung ein komplementaeres lesen dazu ist.
+2.Ob der erste Test R0 oder R1 ist
+3.Bei dem March davor ob W0 oder W1 die letzte schreib Anweisung war
 
 */
 string CParser::decodertest(string direction, vector<string> &orderList, vector<string> &orderListalt,int j) {
 
-	if (orderListalt.empty())
+	if (orderListalt.empty())	// noch kein Vorgaenger vorhanden
 	{
 		return orderList[j];
 	}
-	else if (orderList[j] == orderListalt[j]) {
+	else if (orderList[j] == orderListalt[j]) { // Richtung ist gleich geblieben
 		return orderList[j];
 	}
 	else {
-		if (orderList[j+1] == "R0")
+		if (orderList[j+1] == "R0")		// Richtungswechsel und erstes Element ist Lese 0 
 		{
-			if (orderListalt[orderListalt.size()-1]=="W0")
+			for (int i = orderListalt.size()-1; i !=0; i--)	// Vorgaenger March duch laufen und auf W0 und somit auf den Decodertest prüfen
 			{
-				if (orderListalt[j] != "Ud") {
-					cout << " Decodertest " << endl;
-					for (int i = 0; i < orderListalt.size(); i++)
-					{
-						cout << orderListalt[i] << " ";
-					}
-					cout << endl;
-					for (int i = 0; i < orderList.size(); i++)
-					{
-						cout << orderList[i] << " ";
-					}
-					cout << endl;
+				if (orderListalt[i] == "W0") // 
+				{
+					if (orderListalt[j] != "Ud") {
+						cout << " Decodertest " << endl;
+						for (int i = 0; i < orderListalt.size(); i++)
+						{
+							cout << orderListalt[i] << " ";
+						}
+						cout << endl;
+						for (int i = 0; i < orderList.size(); i++)
+						{
+							cout << orderList[i] << " ";
+						}
+						cout << endl;
 
-					return orderList[j];
+						return orderList[j];
+					}
+					else {
+						return orderList[j];
+						}
 				}
-				else {
+				else if (orderListalt[i] == "W1")
+				{
 					return orderList[j];
+
 				}
+
 			}
-			else
-			{
-				return orderList[j];
-			}		
+			
+					
 		}
 		else if (orderList[j+1] == "R1")	// Das gleiche wie oben nur für R1 und W1!!!!!
 		{
-			if (orderListalt[orderListalt.size()-1] == "W1")
-			{
-				if (orderListalt[j]!="Ud")
+			for (int i = orderListalt.size() - 1; i != 0; i--)
 				{
-					cout << " Decodertest " << endl;
-					for (int i = 0; i < orderListalt.size(); i++)
+					if (orderListalt[i] == "W1") // 
 					{
-						cout << orderListalt[i] << " ";
-					}
-					cout << endl;
-					for (int i = 0; i < orderList.size(); i++)
-					{
-						cout << orderList[i] << " ";
-					}
-					cout << endl;
+						if (orderListalt[j] != "Ud") {
+							cout << " Decodertest " << endl;
+							for (int i = 0; i < orderListalt.size(); i++)
+							{
+								cout << orderListalt[i] << " ";
+							}
+							cout << endl;
+							for (int i = 0; i < orderList.size(); i++)
+							{
+								cout << orderList[i] << " ";
+							}
+							cout << endl;
 
-					return orderList[j];
+							return orderList[j];
+						}
+						else {
+							return orderList[j];
+						}
+					}
+					else if (orderListalt[i] == "W0")
+					{
+						return orderList[j];
+
+					}
+
 				}
-				else
-				{
-					return orderList[j];
-				}				
-			}
-			else
-			{
-				return orderList[j];
-			}
 
 		}
 		else
@@ -356,7 +366,6 @@ int	CParser::yyparse(int length)
 	vector<vector<MarchElement>> *Testpointer = &Testspeicher.front();
 	vector<string> orderList;
 	vector<string> orderListalt;
-	int alt = 0;
 	//---------------------------------------------------------------------------------------------------
 	int tok;
 	if (prflag)fprintf(IP_List, "%5d ", (int)IP_LineNumber);
@@ -376,7 +385,7 @@ int	CParser::yyparse(int length)
 			}
 			else
 				if (tok == IDENTIFIER) {
-					//printf("%s %s ", IP_revToken_table[tok].c_str(), yylval.s.c_str());
+					//Baut jeweil immer ein March und speichert den vorgänger ab.
 						if (yylval.s=="March")
 						{
 							if (orderList.empty())
@@ -417,29 +426,7 @@ int	CParser::yyparse(int length)
 									}
 
 									if (orderList[j] == "March") {
-										/*if (n > 0) {
-											if (i < length - 1) {			//Aktueller Marchtest auf den Anfang zurueck, Reset von n
-												if (k == 15) {
-													//Neuer March Test wird in neuer Zeile dargestellt, wir laufen den Speicherbereich von Anfang an durch  
-													checkForDoubles(Testspeicher, TestArea, k - 1);
-													AnzahlTests++;
-													Toggle_Next_Line = true;
-												}
-												j = j - n;
-												n = 0;
-												i++;
-											}
-											else {
-												AnzahlTests++;
-												Toggle_Next_Line = true;
-												n = 0;
-												j++;
-												i = 0;
-												break;
-											}
-										}
-										else {*/
-										if (orderList.size()>4)
+										if (!orderListalt.empty())
 										{
 											AnzahlTests++;
 											Toggle_Next_Line = true;
@@ -495,7 +482,7 @@ int	CParser::yyparse(int length)
 											}
 											(*Testpointer).push_back(TestArea);
 
-											//Zeichne_Rechteck(TestArea, direction, orderList[j]);					//Zeichnen der Rechtecke in der GDE
+											Zeichne_Rechteck(TestArea, direction, orderList[j]);					//Zeichnen der Rechtecke in der GDE
 										}
 									}
 									j++;
