@@ -33,27 +33,24 @@ struct _Anfang_Dim {
 	int cfill = -1;
 }anfang_dim;
 
-void Zeichne_Dubletten(vector<bool> &doubles) {
+void Zeichne_Dubletten(vector<vector<bool>> &doubles) {
 	int dx = 150;	//Zurück auf die Anfangsposition
 	int dy = 170;
 	int Dublettenzaehler = 0; //Anzahl der Dubletten, die gezeichnet werden sollen.
 
-	for (int i = 0; i < AnzahlProZeile.size(); i++) {		//i läuft die Zeilen entlang
-		
-		if (i >= doubles.size())break;
-			if (doubles[i]) {		//für i=0 muss 0 eingetragen werden, damit die Reihen korrekt berechnet werden.
-				Dublettenzaehler++;
+	for (int i = 0; i < doubles.size(); i++) {		//i läuft die Zeilen entlang
+		for (int j = 0; j < doubles[i].size(); j++) {
+			if (doubles[i][j]) {		//für i=0 muss 0 eingetragen werden, damit die Reihen korrekt berechnet werden.
 				//Dublette kennzeichnen, Farbiges X oder ähnliches, dabei verschieben um dx*j und dy*i
 				//50 ist der Startwert, mit dem Durchlaufen der beiden Schleifen werden somit alle Darstellungen abgearbeitet.
 
-				text(50 + 10 * (doubles.size() - 1), 50 + dy*i - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size() - 1], 11);
-			}		
+				text(50 + 10 , 50 + dy*i - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[i], 11);
+				text(50 + 10 , 50 + dy*j - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[i], 11);
+			}
+		}
+	
 	}
-	if (Dublettenzaehler > 0) {
 
-			text(50 + 10 * (doubles.size() - 1), 50+dy*(AnzahlProZeile.size()) - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[doubles.size() - 1], 11);
-		
-	}
 
 }
 
