@@ -33,6 +33,7 @@ struct _Anfang_Dim {
 	int cfill = -1;
 }anfang_dim;
 
+
 void Zeichne_Dubletten(vector<vector<bool>> &doubles) {
 	int dx = 150;	//Zurück auf die Anfangsposition
 	int dy = 170;
@@ -48,10 +49,7 @@ void Zeichne_Dubletten(vector<vector<bool>> &doubles) {
 				text(50 + 10 , 50 + dy*j - 10, 15, BLUE, 0, CENTER_ALIGN, "%c", DOUBLESIGNS[i], 11);
 			}
 		}
-	
 	}
-
-
 }
 
 void Next_Line() {

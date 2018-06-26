@@ -90,9 +90,9 @@ public:
 };
 
 
-void checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int Speicherzaehler);
+void checkForDoubles(vector<vector<MarchElement>> &Testspeicher);
 void Next_Line();
-void Zeichne_Dubletten(vector<bool> &doubles);
+void Zeichne_Dubletten(vector<vector<bool>> &doubles);
 void Zeichne_Rechteck(vector<MarchElement> &TestArea, string direction, string operation);
 
 #endif

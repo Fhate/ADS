@@ -364,6 +364,7 @@ int	CParser::yyparse(int length)
 	vector<vector<vector<MarchElement>>> Testspeicher;
 	(Testspeicher).resize(10);
 	vector<vector<MarchElement>> *Testpointer = &Testspeicher.front();
+	vector<vector<bool>> doubles;
 	vector<string> orderList;
 	vector<string> orderListalt;
 	//---------------------------------------------------------------------------------------------------
@@ -501,7 +502,6 @@ int	CParser::yyparse(int length)
 					}						
 		if (!prflag);
 	}
-	int blabla=0;
 	for (int i = 0; i < Testspeicher.size();) {
 		if (Testspeicher[i].empty()) {
 			Testspeicher.erase(Testspeicher.begin()+i);
@@ -511,8 +511,10 @@ int	CParser::yyparse(int length)
 		}
 	}
 	Testspeicher.shrink_to_fit();
-	vector<vector<bool>> doubles=checkForDoubles(Testspeicher);
+	doubles=checkForDoubles(Testspeicher);
 	//Zeichnen der Rechtecke und der Dubletten, Zugriff über doubles und Testspeicher.
+	Zeichne_Dubletten(doubles);
+
 	return 0;
 	
 }
