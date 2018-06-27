@@ -5,113 +5,6 @@
 
 using namespace std;
 
-void CParser::RunTest(vector<string> orderList, int length,int laengeorderlist){
-/*bool Toggle_Next_Line = false;				//Kontrollvariable, die das Springen in eine neue Zeile steuert.
-nMarch = laengeorderlist;
-AnzahlTests = 0;
-j = 0;	//Nummer der Einzeloperationen pro Testwiederholung
-vector<MarchElement> TestArea(length);		//Speicherbereich den der Test durchläuft
-vector<vector<MarchElement>> Testspeicher;	//Hier werden die einzelnen Testumgebungen abgespeichert um sie auf Dubletten pruefen zu koennen.
-
-
-for (i = 0; i < length; ) {
-	int n = 0;					//Anzahl der Operationen(R/W) im aktuellen Marchtest, die bereits durchgelaufen sind.
-	while (j<nMarch) {
-		if (direction == "Up") {
-			k = i;					//Zugriffsvariable, die aus der Laufvariable i in Abhaengigkeit von direction berechnet wird.
-		}
-		else if (direction == "Dn") {
-			k = (length - 1) - i;
-		}
-
-		if (orderList[j] == "March") {
-			if (n > 0) {
-				if (i < length - 1) {			//Aktueller Marchtest auf den Anfang zurueck, Reset von n
-					if (k == 15) {
-						//Neuer March Test wird in neuer Zeile dargestellt, wir laufen den Speicherbereich von Anfang an durch  
-						checkForDoubles(Testspeicher, TestArea, k - 1);
-					}
-					j = j - n;
-					n = 0;
-					i++;
-				}
-				else {
-					AnzahlTests++;
-					Toggle_Next_Line = true;
-					n = 0;
-					j++;
-					i = 0;
-					break;
-				}
-			}
-			else {
-				j++;				//Zugriff auf nächste Operation
-			}
-			continue;
-		}
-		else if ((atoi(orderList[i].c_str()) != 0)) {
-			continue;
-		}
-		else if (orderList[j] == "Up") {
-			direction = decodertest(direction, orderList, j);
-		}
-		else if (orderList[j] == "Dn") {
-			direction = decodertest(direction, orderList, j);
-		}
-		else if (orderList[j] == "Ud") {
-			direction = "Up";
-		}
-		else {	// Eignerblock für Lese und Schreibzugriffe, da sonst immer gezeichnet wird
-			if (orderList[j] == "W0") {
-				TestArea[k].writeZero();
-				n++;				//n hochzaehlen, um die Laenge des Testdurchlaufs zu zählen
-			}
-			else if (orderList[j] == "W1") {
-				TestArea[k].writeOne();
-				n++;
-			}
-			else if (orderList[j] == "R0") {
-				n++;
-				if (!TestArea[k].checkZero()) {
-					std::cout << "An der Stelle " << k << " befindet sich ein Fehler. Der aktuelle Befehl ist " << orderList[j] << " Hier wurde faelschlicherweise eine Null erwartet." << endl;
-				}
-			}
-			else if (orderList[j] == "R1") {
-				n++;
-				if (!TestArea[k].checkOne()) {
-					std::cout << "An der Stelle " << k << " befindet sich ein Fehler. Hier wurde faelschlicherweise eine Eins erwartet." << endl;
-				}
-			}
-			else
-			{
-				cout << "Der aktuelle Befehl " << orderList[j] << " kann nicht verarbeitet werden. ";
-				continue;
-			}
-			if (k == 14) {			//an der 14. Stelle wird der Speicherbereich gezeichnet. 
-				if (Toggle_Next_Line) {
-					Next_Line();				//Zeilenumbruch in GDE
-					Toggle_Next_Line = false;
-
-				}
-				Zeichne_Rechteck(TestArea, direction, orderList[j]);					//Zeichnen der Rechtecke in der GDE
-			}
-		}
-		j++;
-	}
-
-	if (j >= nMarch) {		//faengt Fehler ab 
-		if (k == 15) {
-			checkForDoubles(Testspeicher, TestArea, k - 1);
-		}
-		j = j - n;
-		n = 0;
-		i++;
-	}
-}*/
-}
-
-
-
 
 /* Funktion void checkForDoubles(vector<vector<MarchElement>> &Testspeicher, vector<MarchElement> &TestArea, int Speicherzaehler)
 Argumente:
@@ -368,6 +261,7 @@ int	CParser::yyparse(int length)
 	vector<string> orderList;
 	vector<string> orderListalt;
 	//---------------------------------------------------------------------------------------------------
+
 	int tok;
 	if (prflag)fprintf(IP_List, "%5d ", (int)IP_LineNumber);
 	/*

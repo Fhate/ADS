@@ -58,7 +58,7 @@ public:
 	int i, j, k;	//Laufvariablen für Schleifen
 
 	string decodertest(string direction, vector<string> &orderList, vector<string> &orderListalt,int j);
-	void RunTest(vector<string> orderList, int length, int laengeorderlist);
+	
 	//---------------------------------------------------------------
 
 	string yytext;								//input buffer
